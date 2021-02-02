@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владислав Несвит](https://up.htmlacademy.ru/react/6/user/1486707).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Шершнев] (https://htmlacademy.ru/profile/shv_sergey).
 
 ---
 
