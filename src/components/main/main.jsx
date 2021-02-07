@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import PlaceCardComponent from "../place-card/place-card.jsx";
 
-const MainScreen = (props) => {
-  const {placeCards} = props;
+const Main = ({placeCards}) => {
 
   return (
     <div className="page page--gray page--main">
@@ -105,8 +104,15 @@ const MainScreen = (props) => {
   );
 };
 
-MainScreen.propTypes = {
-  placeCards: PropTypes.arrayOf(PropTypes.object)
+Main.propTypes = {
+  placeCards: PropTypes.arrayOf(PropTypes.shape({
+    src: PropTypes.string,
+    price: PropTypes.number,
+    priceText: PropTypes.string,
+    ratingWidth: PropTypes.number,
+    placeCardText: PropTypes.string,
+    type: PropTypes.string
+  })).isRequired
 };
 
-export default MainScreen;
+export default Main;
