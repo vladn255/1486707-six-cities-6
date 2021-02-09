@@ -46,12 +46,12 @@ const PlaceCard = (props) => {
 
 PlaceCard.propTypes = {
   placeCard: PropTypes.shape({
-    src: PropTypes.string,
-    price: PropTypes.number,
-    priceText: PropTypes.string,
-    ratingWidth: PropTypes.number,
-    placeCardText: PropTypes.string,
-    type: PropTypes.string
+    src: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    priceText: PropTypes.string.isRequired,
+    ratingWidth: PropTypes.number.isRequired,
+    placeCardText: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
   }),
 };
 
