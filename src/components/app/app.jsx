@@ -1,19 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+
+import {placeCardsType} from "../../types.js";
+import {Routes} from "../../const.js";
 
 import MainScreenComponent from "../main/main.jsx";
 import FavoritesScreenComponent from "../favorites/favorites.jsx";
 import LoginScreenComponent from "../login/login.jsx";
 import OfferScreenComponent from "../offer/offer.jsx";
 import NotFoundScreenComponent from "../not-found/not-found.jsx";
-
-const Routes = {
-  MAIN: `/`,
-  LOGIN: `/login`,
-  FAVORITES: `/favorites`,
-  OFFER: `/offer/:id?`
-};
 
 const App = ({placeCards}) => {
 
@@ -29,11 +24,11 @@ const App = ({placeCards}) => {
         </Route>
 
         <Route exact path={Routes.FAVORITES}>
-          <FavoritesScreenComponent />
+          <FavoritesScreenComponent placeCards={placeCards} />
         </Route>
 
         <Route exact path={Routes.OFFER}>
-          <OfferScreenComponent />
+          <OfferScreenComponent placeCards={placeCards}/>
         </Route>
 
         <Route>
@@ -45,14 +40,7 @@ const App = ({placeCards}) => {
 };
 
 App.propTypes = {
-  placeCards: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    ratingWidth: PropTypes.number.isRequired,
-    placeCardText: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
-  })).isRequired
+  placeCards: placeCardsType,
 };
 
 export default App;

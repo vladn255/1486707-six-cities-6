@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import PlaceCardComponent from "../place-card/place-card.jsx";
+import {placeCardsType} from "../../types.js";
+
+import PlacesListComponent from "../places-list/places-list.jsx";
 
 const Main = ({placeCards}) => {
 
@@ -90,7 +91,7 @@ const Main = ({placeCards}) => {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {placeCards.map((placeCard, i) => <PlaceCardComponent key={i} placeCard={placeCard}/>)}
+                <PlacesListComponent placeCards = {placeCards}/>
 
               </div>
             </section>
@@ -105,14 +106,7 @@ const Main = ({placeCards}) => {
 };
 
 Main.propTypes = {
-  placeCards: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    ratingWidth: PropTypes.number.isRequired,
-    placeCardText: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
-  })).isRequired
+  placeCards: placeCardsType,
 };
 
 export default Main;
