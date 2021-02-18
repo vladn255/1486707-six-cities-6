@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const {shape, arrayOf, func} = PropTypes;
+const {shape, arrayOf} = PropTypes;
 
 const placeCardType = shape({
   bedrooms: PropTypes.number.isRequired,
@@ -47,10 +47,7 @@ const placeCardType = shape({
 
 const placeCardsType = arrayOf(placeCardType).isRequired;
 
-const mouseOverHandlerType = func.isRequired;
-
 export {
   placeCardType,
-  placeCardsType,
-  mouseOverHandlerType
+  placeCardsType
 };

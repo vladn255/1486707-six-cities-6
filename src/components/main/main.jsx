@@ -2,7 +2,7 @@ import React from 'react';
 
 import {placeCardsType} from "../../types.js";
 
-import PlacesListComponent from "../places-list/places-list.jsx";
+import PlacesList from "../places-list/places-list.jsx";
 
 const Main = ({placeCards}) => {
 
@@ -91,7 +91,7 @@ const Main = ({placeCards}) => {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                <PlacesListComponent placeCards = {placeCards}/>
+                <PlacesList placeCards = {placeCards}/>
 
               </div>
             </section>

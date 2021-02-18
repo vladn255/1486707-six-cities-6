@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 
 import {placeCardsType} from "../../types.js";
 
-import PlaceCardComponent from "../place-card/place-card.jsx";
+import PlaceCard from "../place-card/place-card.jsx";
 
 const PlacesList = ({placeCards}) => {
-  let [activeCardId, setActiveCard] = useState(0);
+  let [, setActiveCard] = useState(0);
   const mouseOverHandler = (articleId) => {
-    activeCardId = articleId;
-    setActiveCard(activeCardId);
+    setActiveCard(articleId);
   };
 
   return (
     <>
-      {placeCards.map((placeCard) => <PlaceCardComponent key={placeCard.id.toString()} placeCard={placeCard} mouseOverHandler={mouseOverHandler}/>)}
+      {placeCards.map((placeCard) => <PlaceCard key={placeCard.id.toString()} placeCard={placeCard} mouseOverHandler={mouseOverHandler}/>)}
     </>
   );
 };

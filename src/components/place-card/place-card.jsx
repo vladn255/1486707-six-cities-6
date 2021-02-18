@@ -1,13 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import {placeCardType, mouseOverHandlerType} from "../../types.js";
+import {placeCardType} from "../../types.js";
 
 import {MAX_RATING_PERCENT} from "../../const.js";
 
-const PlaceCard = (props) => {
-  const {id, previewImage, price, priceText, rating, title, type, isPremium, isFavorite} = props.placeCard;
-  const mouseOverHandler = props.mouseOverHandler;
+const PlaceCard = ({placeCard, mouseOverHandler}) => {
+  const {id, previewImage, price, priceText, rating, title, type, isPremium, isFavorite} = placeCard;
 
   return (
     <article className="cities__place-card place-card"
@@ -22,7 +22,7 @@ const PlaceCard = (props) => {
         : null }
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/offer/:id">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -53,7 +53,7 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/offer/:id">{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -63,7 +63,7 @@ const PlaceCard = (props) => {
 
 PlaceCard.propTypes = {
   placeCard: placeCardType,
-  mouseOverHandler: mouseOverHandlerType
+  mouseOverHandler: PropTypes.func.isRequired
 };
 
 export default PlaceCard;

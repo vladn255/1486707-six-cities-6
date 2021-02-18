@@ -1,15 +1,22 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 import {placeCardsType} from "../../types.js";
 
 import {MAX_RATING_PERCENT} from "../../const.js";
 
-import PlacesListComponent from "../places-list/places-list.jsx";
-import ReviewFormComponent from '../review-form/review-form.jsx';
+import PlacesList from "../places-list/places-list.jsx";
+import ReviewForm from '../review-form/review-form.jsx';
 
-const Offer = ({placeCards}) => {
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCards[0];
+const Offer = ({placeCards, placeCardsNearby}) => {
+  const idParam = useParams();
+
+  const placeCard = placeCards.find((card) => {
+    return card.id === parseInt(idParam.id, 10);
+  });
+
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
+
 
   return (
     <div className="page">
@@ -137,7 +144,7 @@ const Offer = ({placeCards}) => {
                 </div>
               </div>
 
-              <ReviewFormComponent />
+              <ReviewForm />
 
             </div>
           </div>
@@ -148,7 +155,7 @@ const Offer = ({placeCards}) => {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <PlacesListComponent placeCards = {placeCards}/>
+              <PlacesList placeCards = {placeCardsNearby}/>
 
             </div>
           </section>
@@ -159,7 +166,8 @@ const Offer = ({placeCards}) => {
 };
 
 Offer.propTypes = {
-  placeCards: placeCardsType
+  placeCards: placeCardsType,
+  placeCardsNearby: placeCardsType
 };
 
 export default Offer;

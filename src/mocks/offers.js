@@ -73,7 +73,7 @@ const placeCards = [
       `Dishwasher`
     ],
     host: {
-      avatarUrl: `img\avatar-angelina.jpg`,
+      avatarUrl: `img/avatar-angelina.jpg`,
       id: getRandomInteger(1, 1000),
       isPro: true,
       name: `Angelina`
@@ -120,7 +120,7 @@ const placeCards = [
       `Dishwasher`
     ],
     host: {
-      avatarUrl: `img\avatar-angelina.jpg`,
+      avatarUrl: `img/avatar-angelina.jpg`,
       id: getRandomInteger(1, 1000),
       isPro: true,
       name: `Angelina`
@@ -167,7 +167,7 @@ const placeCards = [
       `Dishwasher`
     ],
     host: {
-      avatarUrl: `img\avatar-angelina.jpg`,
+      avatarUrl: `img/avatar-angelina.jpg`,
       id: getRandomInteger(1, 1000),
       isPro: true,
       name: `Angelina`
@@ -214,7 +214,7 @@ const placeCards = [
       `Dishwasher`
     ],
     host: {
-      avatarUrl: `img\avatar-angelina.jpg`,
+      avatarUrl: `img/avatar-angelina.jpg`,
       id: getRandomInteger(1, 1000),
       isPro: true,
       name: `Angelina`
