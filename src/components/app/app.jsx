@@ -1,43 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-import MainScreenComponent from "../main/main.jsx";
-import FavoritesScreenComponent from "../favorites/favorites.jsx";
-import LoginScreenComponent from "../login/login.jsx";
-import OfferScreenComponent from "../offer/offer.jsx";
-import NotFoundScreenComponent from "../not-found/not-found.jsx";
+import {placeCardsType} from "../../types.js";
+import {RoutePath} from "../../const.js";
 
-const Routes = {
-  MAIN: `/`,
-  LOGIN: `/login`,
-  FAVORITES: `/favorites`,
-  OFFER: `/offer/:id?`
-};
+import MainScreen from "../main/main.jsx";
+import FavoritesScreen from "../favorites/favorites.jsx";
+import LoginScreen from "../login/login.jsx";
+import OfferScreen from "../offer/offer.jsx";
+import NotFoundScreen from "../not-found/not-found.jsx";
 
-const App = ({placeCards}) => {
+const App = ({placeCards, placeCardsNearby}) => {
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Routes.MAIN}>
-          <MainScreenComponent placeCards={placeCards} />
+        <Route exact path={RoutePath.MAIN}>
+          <MainScreen placeCards={placeCards} />
         </Route>
 
-        <Route exact path={Routes.LOGIN}>
-          <LoginScreenComponent />
+        <Route exact path={RoutePath.LOGIN}>
+          <LoginScreen />
         </Route>
 
-        <Route exact path={Routes.FAVORITES}>
-          <FavoritesScreenComponent />
+        <Route exact path={RoutePath.FAVORITES}>
+          <FavoritesScreen placeCards={placeCards} />
         </Route>
 
-        <Route exact path={Routes.OFFER}>
-          <OfferScreenComponent />
+        <Route exact path={RoutePath.OFFER}>
+          <OfferScreen
+            placeCards={placeCards}
+            placeCardsNearby={placeCardsNearby}/>
         </Route>
 
         <Route>
-          <NotFoundScreenComponent />
+          <NotFoundScreen />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -45,14 +42,8 @@ const App = ({placeCards}) => {
 };
 
 App.propTypes = {
-  placeCards: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    ratingWidth: PropTypes.number.isRequired,
-    placeCardText: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
-  })).isRequired
+  placeCards: placeCardsType,
+  placeCardsNearby: placeCardsType
 };
 
 export default App;
