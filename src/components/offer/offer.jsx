@@ -1,19 +1,14 @@
 import React from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-import {placeCardsType} from "../../types.js";
+import {placeCardType, placeCardsType} from "../../types.js";
 
 import {MAX_RATING_PERCENT} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 
-const Offer = ({placeCards, placeCardsNearby}) => {
-  const idParam = useParams();
-
-  const placeCard = placeCards.find((card) => {
-    return card.id === parseInt(idParam.id, 10);
-  });
+const Offer = ({placeCard, placeCardsNearby}) => {
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
 
@@ -166,7 +161,7 @@ const Offer = ({placeCards, placeCardsNearby}) => {
 };
 
 Offer.propTypes = {
-  placeCards: placeCardsType,
+  placeCard: placeCardType,
   placeCardsNearby: placeCardsType
 };
 
