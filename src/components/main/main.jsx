@@ -102,7 +102,7 @@ const Main = ({placeCards}) => {
 
                 <Map
                   city = {CITY}
-                  points = {placeCards.map((card) => card.location)} />
+                  points = {placeCards.map((card) => card.city.location)} />
 
               </section>
             </div>
