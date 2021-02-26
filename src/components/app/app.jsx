@@ -27,10 +27,13 @@ const App = ({placeCards, placeCardsNearby}) => {
           <FavoritesScreen placeCards={placeCards} />
         </Route>
 
-        <Route exact path={RoutePath.OFFER}>
-          <OfferScreen
-            placeCards={placeCards}
-            placeCardsNearby={placeCardsNearby}/>
+        <Route exact path={RoutePath.OFFER} render={({match}) => {
+          const placeCard = placeCards.find(({id}) => id === Number(match.params.id));
+
+          return <OfferScreen
+            placeCard={placeCard}
+            placeCardsNearby={placeCardsNearby}/>;
+        }}>
         </Route>
 
         <Route>

@@ -1,8 +1,10 @@
 import React from 'react';
 
 import {placeCardsType} from "../../types.js";
+import {CITY} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
+import Map from "../map/map.jsx";
 
 const Main = ({placeCards}) => {
 
@@ -96,7 +98,13 @@ const Main = ({placeCards}) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+
+                <Map
+                  city = {CITY}
+                  points = {placeCards.map((card) => card.city.location)} />
+
+              </section>
             </div>
           </div>
         </div>

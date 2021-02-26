@@ -30,8 +30,11 @@ const StarsList = [
   },
 ];
 
+const CITY = [52.38333, 4.9];
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
-  StarsList
+  StarsList,
+  CITY
 };
