@@ -30,18 +30,18 @@ const Map = ({city, points}) => {
       })
       .addTo(mapRef.current);
 
-    points.forEach((point) => {
+    points.forEach(({title, city: {location: {latitude, longitude, zoom}}}) => {
       leaflet.marker({
-        lat: point.city.location.latitude,
-        lng: point.city.location.longitude,
-        zoom: point.city.location.zoom,
-        title: point.title
+        lat: latitude,
+        lng: longitude,
+        zoom,
+        title
       },
       {
         icon
       })
       .addTo(mapRef.current)
-      .bindPopup(point.title);
+      .bindPopup(title);
     });
   }, []);
 

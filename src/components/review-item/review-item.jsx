@@ -6,7 +6,8 @@ import {getRatingWidth} from "../../utils.js";
 const ReviewItem = ({reviewItem}) => {
   const {comment, date, rating, user} = reviewItem;
   const {avatarUrl, name} = user;
-  const dateParced = new Date(date);
+  const newDate = new Date(date);
+  const dateParsed = newDate.toLocaleString(`en-us`, {month: `long`, year: `numeric`});
 
   return (
     <li className="reviews__item">
@@ -30,7 +31,7 @@ const ReviewItem = ({reviewItem}) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={dateParced}>{dateParced.toDateString()}</time>
+        <time className="reviews__time" dateTime={newDate}>{dateParsed}</time>
       </div>
     </li>
   );
