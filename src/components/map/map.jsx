@@ -18,7 +18,7 @@ const Map = ({city, points}) => {
     mapRef.current = leaflet.map(`map`, {
       center: city,
       zoom: ZOOM,
-      zoomControl: true,
+      zoomControl: false,
       marker: true
     });
 
