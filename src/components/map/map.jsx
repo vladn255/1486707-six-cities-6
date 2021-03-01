@@ -31,17 +31,17 @@ const Map = ({city, points}) => {
       .addTo(mapRef.current);
 
     points.forEach((point) => {
-
       leaflet.marker({
-        lat: point.latitude,
-        lng: point.longitude,
-        zoom: point.zoom
+        lat: point.city.location.latitude,
+        lng: point.city.location.longitude,
+        zoom: point.city.location.zoom,
+        title: point.title
       },
       {
         icon
       })
-      .addTo(mapRef.current);
-
+      .addTo(mapRef.current)
+      .bindPopup(point.title);
     });
   }, []);
 
@@ -53,9 +53,13 @@ const Map = ({city, points}) => {
 Map.propTypes = {
   city: PropTypes.arrayOf(PropTypes.number.isRequired),
   points: PropTypes.arrayOf(PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired
+    city: PropTypes.shape({
+      location: PropTypes.shape({
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+        zoom: PropTypes.number.isRequired})
+    }),
+    title: PropTypes.string.isRequired
   }))
 };
 

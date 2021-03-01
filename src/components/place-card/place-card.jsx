@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {placeCardType} from "../../types.js";
-
-import {MAX_RATING_PERCENT} from "../../const.js";
+import {getRatingWidth} from "../../utils.js";
 
 const PlaceCard = ({placeCard, mouseOverHandler}) => {
   const {id, previewImage, price, priceText, rating, title, type, isPremium, isFavorite} = placeCard;
@@ -47,7 +46,7 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              width: `${Math.floor(rating) / MAX_RATING_PERCENT}%`
+              width: `${getRatingWidth(rating)}%`
             }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
