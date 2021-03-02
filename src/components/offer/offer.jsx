@@ -1,17 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {placeCardType, placeCardsType} from "../../types.js";
-
-import {MAX_RATING_PERCENT} from "../../const.js";
+import {placeCardType, placeCardsType, reviewListType} from "../../types.js";
+import {CITY} from "../../const.js";
+import {getRatingWidth} from "../../utils.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
+import Map from "../map/map.jsx";
 
-const Offer = ({placeCard, placeCardsNearby}) => {
+const Offer = ({placeCard, placeCardsNearby, reviewList}) => {
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
-
 
   return (
     <div className="page">
@@ -82,7 +82,7 @@ const Offer = ({placeCard, placeCardsNearby}) => {
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
                   <span style={{
-                    width: `${Math.floor(rating) / MAX_RATING_PERCENT}%`
+                    width: `${getRatingWidth(rating)}%`
                   }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
@@ -139,11 +139,17 @@ const Offer = ({placeCard, placeCardsNearby}) => {
                 </div>
               </div>
 
-              <ReviewForm />
+              <ReviewForm reviewList={reviewList}/>
 
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+
+            <Map
+              city = {CITY}
+              points = {placeCardsNearby.map((card) => card)} />
+
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -162,7 +168,8 @@ const Offer = ({placeCard, placeCardsNearby}) => {
 
 Offer.propTypes = {
   placeCard: placeCardType,
-  placeCardsNearby: placeCardsType
+  placeCardsNearby: placeCardsType,
+  reviewList: reviewListType
 };
 
 export default Offer;

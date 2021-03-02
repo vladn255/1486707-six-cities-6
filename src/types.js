@@ -42,12 +42,28 @@ const placeCardType = shape({
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
-
 });
 
 const placeCardsType = arrayOf(placeCardType).isRequired;
 
+const reviewItemType = shape({
+  comment: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    avatarUrl: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    isPro: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired
+  })
+});
+
+const reviewListType = arrayOf(reviewItemType).isRequired;
+
 export {
   placeCardType,
-  placeCardsType
+  placeCardsType,
+  reviewItemType,
+  reviewListType
 };

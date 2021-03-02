@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-import {placeCardsType} from "../../types.js";
+import {placeCardsType, reviewListType} from "../../types.js";
 import {RoutePath} from "../../const.js";
 
 import MainScreen from "../main/main.jsx";
@@ -10,7 +10,7 @@ import LoginScreen from "../login/login.jsx";
 import OfferScreen from "../offer/offer.jsx";
 import NotFoundScreen from "../not-found/not-found.jsx";
 
-const App = ({placeCards, placeCardsNearby}) => {
+const App = ({placeCards, placeCardsNearby, reviewList}) => {
 
   return (
     <BrowserRouter>
@@ -32,7 +32,8 @@ const App = ({placeCards, placeCardsNearby}) => {
 
           return <OfferScreen
             placeCard={placeCard}
-            placeCardsNearby={placeCardsNearby}/>;
+            placeCardsNearby={placeCardsNearby}
+            reviewList={reviewList}/>;
         }}>
         </Route>
 
@@ -46,7 +47,8 @@ const App = ({placeCards, placeCardsNearby}) => {
 
 App.propTypes = {
   placeCards: placeCardsType,
-  placeCardsNearby: placeCardsType
+  placeCardsNearby: placeCardsType,
+  reviewList: reviewListType
 };
 
 export default App;

@@ -18,7 +18,7 @@ const Map = ({city, points}) => {
     mapRef.current = leaflet.map(`map`, {
       center: city,
       zoom: ZOOM,
-      zoomControl: true,
+      zoomControl: false,
       marker: true
     });
 
@@ -30,18 +30,18 @@ const Map = ({city, points}) => {
       })
       .addTo(mapRef.current);
 
-    points.forEach((point) => {
-
+    points.forEach(({title, city: {location: {latitude, longitude, zoom}}}) => {
       leaflet.marker({
-        lat: point.latitude,
-        lng: point.longitude,
-        zoom: point.zoom
+        lat: latitude,
+        lng: longitude,
+        zoom,
+        title
       },
       {
         icon
       })
-      .addTo(mapRef.current);
-
+      .addTo(mapRef.current)
+      .bindPopup(title);
     });
   }, []);
 
@@ -53,9 +53,13 @@ const Map = ({city, points}) => {
 Map.propTypes = {
   city: PropTypes.arrayOf(PropTypes.number.isRequired),
   points: PropTypes.arrayOf(PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired
+    city: PropTypes.shape({
+      location: PropTypes.shape({
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+        zoom: PropTypes.number.isRequired})
+    }),
+    title: PropTypes.string.isRequired
   }))
 };
 
