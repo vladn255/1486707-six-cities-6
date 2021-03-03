@@ -2,9 +2,12 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
+import {connect} from 'react-redux';
+
+import {cityType} from "../../types.js";
 
 const Map = ({city, points}) => {
-
+  const {location} = city;
   const icon = leaflet.icon({
     iconUrl: `img/pin.svg`,
     iconSize: [30, 30]
@@ -16,13 +19,13 @@ const Map = ({city, points}) => {
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
-      center: city,
+      center: location,
       zoom: ZOOM,
       zoomControl: false,
       marker: true
     });
 
-    mapRef.current.setView(city, ZOOM);
+    mapRef.current.setView(location, ZOOM);
 
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -43,7 +46,10 @@ const Map = ({city, points}) => {
       .addTo(mapRef.current)
       .bindPopup(title);
     });
-  }, []);
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [city]);
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef} ></div>
@@ -51,7 +57,7 @@ const Map = ({city, points}) => {
 };
 
 Map.propTypes = {
-  city: PropTypes.arrayOf(PropTypes.number.isRequired),
+  city: cityType,
   points: PropTypes.arrayOf(PropTypes.shape({
     city: PropTypes.shape({
       location: PropTypes.shape({
@@ -63,4 +69,9 @@ Map.propTypes = {
   }))
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  city: state.selectedCity,
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);

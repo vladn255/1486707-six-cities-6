@@ -16,7 +16,7 @@ const App = ({placeCards, placeCardsNearby, reviewList}) => {
     <BrowserRouter>
       <Switch>
         <Route exact path={RoutePath.MAIN}>
-          <MainScreen placeCards={placeCards} />
+          <MainScreen />
         </Route>
 
         <Route exact path={RoutePath.LOGIN}>
