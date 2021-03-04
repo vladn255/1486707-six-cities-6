@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import {placeCardsType, reviewListType} from "../../types.js";
 import {RoutePath} from "../../const.js";
@@ -9,14 +10,18 @@ import FavoritesScreen from "../favorites/favorites.jsx";
 import LoginScreen from "../login/login.jsx";
 import OfferScreen from "../offer/offer.jsx";
 import NotFoundScreen from "../not-found/not-found.jsx";
+import MainEmpty from '../main-empty/main-empty.jsx';
 
 const App = ({placeCards, placeCardsNearby, reviewList}) => {
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={RoutePath.MAIN}>
-          <MainScreen placeCards={placeCards} />
+        <Route exact path={RoutePath.MAIN} render={() => {
+          return placeCards.length !== 0
+            ? <MainScreen />
+            : <MainEmpty />;
+        }}>
         </Route>
 
         <Route exact path={RoutePath.LOGIN}>
@@ -45,10 +50,15 @@ const App = ({placeCards, placeCardsNearby, reviewList}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  placeCards: state.placeCards
+});
+
 App.propTypes = {
   placeCards: placeCardsType,
   placeCardsNearby: placeCardsType,
   reviewList: reviewListType
 };
 
-export default App;
+export {App};
+export default connect(mapStateToProps)(App);

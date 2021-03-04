@@ -30,11 +30,42 @@ const StarsList = [
   },
 ];
 
-const CITY = [52.38333, 4.9];
+const CityList = [
+  {
+    id: 1,
+    name: `Paris`,
+    location: [52.35333, 4.8]
+  },
+  {
+    id: 2,
+    name: `Cologne`,
+    location: [52.36333, 4.7]
+  },
+  {
+    id: 3,
+    name: `Brussels`,
+    location: [52.34333, 4.6]
+  },
+  {
+    id: 4,
+    name: `Amsterdam`,
+    location: [52.38333, 4.9]
+  },
+  {
+    id: 5,
+    name: `Hamburg`,
+    location: [52.39333, 4.5]
+  },
+  {
+    id: 6,
+    name: `Dusseldorf`,
+    location: [52.40333, 4.4]
+  }
+];
 
 export {
   RoutePath,
   MAX_RATING_PERCENT,
   StarsList,
-  CITY
+  CityList
 };

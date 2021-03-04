@@ -242,6 +242,10 @@ const placeCards = [
   }
 ];
 
+const placeCardsNearby = placeCards.slice(0, 2);
+
+export default placeCards;
+
 export {
-  placeCards
+  placeCardsNearby
 };

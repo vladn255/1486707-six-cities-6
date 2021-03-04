@@ -1,15 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-import {placeCardType, placeCardsType, reviewListType} from "../../types.js";
-import {CITY} from "../../const.js";
+import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
 import {getRatingWidth} from "../../utils.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
 
-const Offer = ({placeCard, placeCardsNearby, reviewList}) => {
+const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
 
@@ -146,7 +146,7 @@ const Offer = ({placeCard, placeCardsNearby, reviewList}) => {
           <section className="property__map map">
 
             <Map
-              city = {CITY}
+              city = {selectedCity}
               points = {placeCardsNearby.map((card) => card)} />
 
           </section>
@@ -166,10 +166,16 @@ const Offer = ({placeCard, placeCardsNearby, reviewList}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  selectedCity: state.selectedCity
+});
+
 Offer.propTypes = {
   placeCard: placeCardType,
   placeCardsNearby: placeCardsType,
-  reviewList: reviewListType
+  reviewList: reviewListType,
+  selectedCity: cityType,
 };
 
-export default Offer;
+export {Offer};
+export default connect(mapStateToProps)(Offer);

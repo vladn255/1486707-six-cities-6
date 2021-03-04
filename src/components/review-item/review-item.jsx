@@ -7,7 +7,8 @@ const ReviewItem = ({reviewItem}) => {
   const {comment, date, rating, user} = reviewItem;
   const {avatarUrl, name} = user;
   const newDate = new Date(date);
-  const dateParsed = newDate.toLocaleString(`en-us`, {month: `long`, year: `numeric`});
+  const dateParsedToText = newDate.toLocaleString(`en-us`, {month: `long`, year: `numeric`});
+  const dateParsedToDataText = newDate.toISOString().slice(0, 10);
 
   return (
     <li className="reviews__item">
@@ -31,7 +32,7 @@ const ReviewItem = ({reviewItem}) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={newDate}>{dateParsed}</time>
+        <time className="reviews__time" dateTime={dateParsedToDataText}>{dateParsedToText}</time>
       </div>
     </li>
   );
