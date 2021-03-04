@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {placeCardsType} from "../../types.js";
-import {CityList} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import LocationList from "../location-list/location-list.jsx";
@@ -40,9 +39,7 @@ const Main = ({placeCards}) => {
         <div className="tabs">
           <section className="locations container">
 
-            <LocationList
-              cities={CityList}
-            />
+            <LocationList />
 
           </section>
         </div>
@@ -76,7 +73,6 @@ const Main = ({placeCards}) => {
               <section className="cities__map map">
 
                 <Map
-
                   points = {placeCards.map((card) => card)} />
 
               </section>
@@ -88,8 +84,8 @@ const Main = ({placeCards}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  placeCards: state.placeCards
+const mapStateToProps = ({placeCards}) => ({
+  placeCards
 });
 
 Main.propTypes = {

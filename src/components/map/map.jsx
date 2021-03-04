@@ -69,8 +69,8 @@ Map.propTypes = {
   }))
 };
 
-const mapStateToProps = (state) => ({
-  city: state.selectedCity,
+const mapStateToProps = ({selectedCity}) => ({
+  city: selectedCity,
 });
 
 export {Map};

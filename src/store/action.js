@@ -1,20 +1,24 @@
+import {getFilteredPlaceCards} from "../utils.js";
+import initialPlaceCards from "../mocks/offers.js";
+
 const ActionType = {
   CHANGE_CITY: `main/changeCity`,
-  SET_PLACE_CARDS: `main/getPlaceCards`
+  SET_PLACE_CARDS: `main/setPlaceCards`
 };
 
 const ActionCreator = {
-  changeCity: (city) => {
-    return {
-      type: ActionType.CHANGE_CITY,
-      payload: city
-    };
-  },
+  changeCity: (city) => ({
+    type: ActionType.CHANGE_CITY,
+    payload: city
+  }),
 
-  setPlaceCards: (cards) => ({
-    type: ActionType.SET_PLACE_CARDS,
-    payload: cards
-  })
+  setPlaceCards: (city) => {
+    const placeCards = getFilteredPlaceCards(initialPlaceCards, city);
+    return {
+      type: ActionType.SET_PLACE_CARDS,
+      payload: placeCards
+    };
+  }
 };
 
 export {

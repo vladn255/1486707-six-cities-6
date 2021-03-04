@@ -1,11 +1,12 @@
 import {ActionType} from "./action.js";
 import {CityList} from "../const.js";
+import {getFilteredPlaceCards} from "../utils.js";
 import initialPlaceCards from "../mocks/offers.js";
+
 
 const initialState = {
   selectedCity: CityList[0],
-  initialPlaceCards,
-  placeCards: initialPlaceCards
+  placeCards: getFilteredPlaceCards(initialPlaceCards, CityList[0])
 };
 
 const reducer = (state = initialState, action) => {
