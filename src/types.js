@@ -83,6 +83,8 @@ const LocationListType = {
   onChangeCity: PropTypes.func.isRequired
 }.isRequired;
 
+const functionType = PropTypes.func.isRequired;
+
 export {
   placeCardType,
   placeCardsType,
@@ -91,5 +93,6 @@ export {
   cityType,
   citiesType,
   LocationType,
-  LocationListType
+  LocationListType,
+  functionType
 };

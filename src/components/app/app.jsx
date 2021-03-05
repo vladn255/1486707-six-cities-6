@@ -50,15 +50,15 @@ const App = ({placeCards, placeCardsNearby, reviewList}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  placeCards: state.placeCards
-});
-
 App.propTypes = {
   placeCards: placeCardsType,
   placeCardsNearby: placeCardsType,
   reviewList: reviewListType
 };
+
+const mapStateToProps = ({placeCards}) => ({
+  placeCards
+});
 
 export {App};
 export default connect(mapStateToProps)(App);

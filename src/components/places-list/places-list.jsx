@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import {placeCardsType} from "../../types.js";
+import {ActionCreator} from '../../store/action.js';
+import {functionType, placeCardsType} from "../../types.js";
 
 import PlaceCard from "../place-card/place-card.jsx";
 
-const PlacesList = ({placeCards}) => {
-  let [, setActiveCard] = useState(0);
+const PlacesList = ({placeCards, onSetActiveCard}) => {
   const mouseOverHandler = (articleId) => {
-    setActiveCard(articleId);
+    onSetActiveCard(articleId);
   };
 
   return (
@@ -19,6 +20,18 @@ const PlacesList = ({placeCards}) => {
 
 PlacesList.propTypes = {
   placeCards: placeCardsType,
+  onSetActiveCard: functionType
 };
 
-export default PlacesList;
+const mapStateToProps = ({activeCardId}) => ({
+  activeCardId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSetActiveCard(articleId) {
+    dispatch(ActionCreator.setActiveCard(articleId));
+  }
+});
+
+export {PlacesList};
+export default connect(mapStateToProps, mapDispatchToProps)(PlacesList);

@@ -6,7 +6,7 @@ import {LocationType} from "../../types.js";
 
 import {CityList} from "../../const.js";
 
-const getActiveCity = (cityName, selectedCityName) => {
+const getActiveCityClass = (cityName, selectedCityName) => {
   return cityName === selectedCityName
     ? `tabs__item--active`
     : ``;
@@ -30,12 +30,14 @@ const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
         onChangeCity(targetCity);
 
       }}>
-      <a className={`locations__item-link tabs__item ${getActiveCity(cityName, selectedCity.name)}`} href="#">
+      <a className={`locations__item-link tabs__item ${getActiveCityClass(cityName, selectedCity.name)}`} href="#">
         <span>{cityName}</span>
       </a>
     </li>
   );
 };
+
+LocationItem.propTypes = LocationType;
 
 const mapStateToProps = ({selectedCity, initialPlaceCards}) => ({
   selectedCity,
@@ -45,11 +47,8 @@ const mapStateToProps = ({selectedCity, initialPlaceCards}) => ({
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.setPlaceCards(city));
   }
 });
-
-LocationItem.propTypes = LocationType;
 
 export {LocationItem};
 export default connect(mapStateToProps, mapDispatchToProps)(LocationItem);
