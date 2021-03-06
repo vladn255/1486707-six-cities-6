@@ -6,6 +6,7 @@ import {placeCardsType} from "../../types.js";
 import PlacesList from "../places-list/places-list.jsx";
 import LocationList from "../location-list/location-list.jsx";
 import Map from "../map/map.jsx";
+import SortMenu from "../sort-menu-items/sort-menu-items.jsx";
 
 const Main = ({placeCards}) => {
 
@@ -48,7 +49,9 @@ const Main = ({placeCards}) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{placeCards.length} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
+
+              <SortMenu />
+              {/* <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
                   Popular
@@ -62,7 +65,7 @@ const Main = ({placeCards}) => {
                   <li className="places__option" tabIndex="0">Price: high to low</li>
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
-              </form>
+              </form> */}
               <div className="cities__places-list places__list tabs__content">
 
                 <PlacesList placeCards = {placeCards}/>
@@ -84,13 +87,13 @@ const Main = ({placeCards}) => {
   );
 };
 
-const mapStateToProps = ({placeCards}) => ({
-  placeCards
-});
-
 Main.propTypes = {
   placeCards: placeCardsType
 };
+
+const mapStateToProps = ({placeCards}) => ({
+  placeCards
+});
 
 export {Main};
 export default connect(mapStateToProps)(Main);
