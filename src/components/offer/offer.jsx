@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
-import {getRatingWidth} from "../../utils.js";
+import {getRatingWidth, adaptPlaceCardToClient} from "../../utils.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
@@ -11,7 +11,7 @@ import Map from "../map/map.jsx";
 
 const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = adaptPlaceCardToClient(placeCard);
 
   return (
     <div className="page">
@@ -166,8 +166,9 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedCity: state.selectedCity
+const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
+  selectedCity,
+  placeCardsNearby
 });
 
 Offer.propTypes = {

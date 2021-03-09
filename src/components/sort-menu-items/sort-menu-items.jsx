@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {ActionCreator} from '../../store/action.js';
 
-import {functionType, placeCardsType} from "../../types.js";
+import {placeCardsType} from "../../types.js";
 import {sortByPriceDown, sortByPriceUp, sortByRate} from "../../utils.js";
 import {SortItems} from "../../const.js";
 
-const SortMenuItems = ({initialPlaceCards, placeCards, onChangePlaceCards}) => {
+const SortMenuItems = ({unSortedPlaceCards, onChangePlaceCards}) => {
   const [isToggleOn, setToggle] = useState(false);
   const [sortItem, setSortItem] = useState(SortItems.POPULAR);
 
@@ -23,22 +24,22 @@ const SortMenuItems = ({initialPlaceCards, placeCards, onChangePlaceCards}) => {
 
   const handleFilterPopularClick = () => {
     setSortItem(SortItems.POPULAR);
-    onChangePlaceCards(placeCards = initialPlaceCards.slice());
+    onChangePlaceCards(unSortedPlaceCards);
   };
 
   const handleFilterPriceDownClick = () => {
     setSortItem(SortItems.PRICE_LOW_TO_HIGH);
-    onChangePlaceCards(placeCards.slice().sort(sortByPriceDown));
+    onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByPriceDown));
   };
 
   const handleFilterPriceUpClick = () => {
     setSortItem(SortItems.PRICE_HIGH_TO_LOW);
-    onChangePlaceCards(placeCards.slice().sort(sortByPriceUp));
+    onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByPriceUp));
   };
 
   const handleFilterTopRatedClick = () => {
     setSortItem(SortItems.TOP_RATED_FIRST);
-    onChangePlaceCards(placeCards.slice().sort(sortByRate));
+    onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByRate));
   };
 
   return (
@@ -72,13 +73,13 @@ const SortMenuItems = ({initialPlaceCards, placeCards, onChangePlaceCards}) => {
 
 SortMenuItems.propTypes = {
   placeCards: placeCardsType,
-  initialPlaceCards: placeCardsType,
-  onChangePlaceCards: functionType
+  unSortedPlaceCards: placeCardsType,
+  onChangePlaceCards: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({placeCards, initialPlaceCards}) => ({
+const mapStateToProps = ({placeCards, unSortedPlaceCards}) => ({
   placeCards,
-  initialPlaceCards
+  unSortedPlaceCards
 });
 
 const mapDispatchToProps = (dispatch) => ({

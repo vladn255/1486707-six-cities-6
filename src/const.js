@@ -70,10 +70,16 @@ const SortItems = {
   TOP_RATED_FIRST: `Top rated first`
 };
 
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`
+};
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
   StarsList,
   CityList,
-  SortItems
+  SortItems,
+  AuthorizationStatus
 };

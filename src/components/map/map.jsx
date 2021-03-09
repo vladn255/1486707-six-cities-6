@@ -10,25 +10,13 @@ const Map = ({city, points, activeCardId}) => {
   const {location} = city;
 
   const getIcon = (id, activePointId) => {
-    let icon;
-    if (id === activePointId) {
-      icon = leaflet.icon({
-        iconUrl: `img/pin-active.svg`,
+    return (
+      leaflet.icon({
+        iconUrl: ((id === activePointId) ? `img/pin-active.svg` : `img/pin.svg`),
         iconSize: [30, 30]
-      });
-    } else {
-      icon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
-        iconSize: [30, 30]
-      });
-    }
-    return icon;
+      })
+    );
   };
-
-  // const icon = leaflet.icon({
-  //   iconUrl: `img/pin.svg`,
-  //   iconSize: [30, 30]
-  // });
 
   const ZOOM = 12;
 

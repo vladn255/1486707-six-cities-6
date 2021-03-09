@@ -38,7 +38,6 @@ const placeCardType = shape({
   maxAdults: PropTypes.number.isRequired,
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  priceText: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
@@ -83,8 +82,6 @@ const LocationListType = {
   onChangeCity: PropTypes.func.isRequired
 }.isRequired;
 
-const functionType = PropTypes.func.isRequired;
-
 export {
   placeCardType,
   placeCardsType,
@@ -93,6 +90,5 @@ export {
   cityType,
   citiesType,
   LocationType,
-  LocationListType,
-  functionType
+  LocationListType
 };

@@ -1,25 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from "redux-thunk";
 
 import App from './components/app/app';
 
-import {placeCardsNearby} from "./mocks/offers.js";
 import {reviews} from "./mocks/reviews.js";
 
 import {reducer} from './store/reducer.js';
+import {ActionCreator} from './store/action.js';
+import {createAPI} from './services/api.js';
+import {AuthorizationStatus} from './const';
+import {fetchPlaceCards} from './store/api-actions';
+
+const api = createAPI(
+    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
 
 const store = createStore(
     reducer,
-    composeWithDevTools()
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api))
+    )
 );
+
+store.dispatch(fetchPlaceCards());
 
 ReactDOM.render(
     <Provider store={store}>
       <App
-        placeCardsNearby={placeCardsNearby}
         reviewList={reviews}
       />
     </Provider>,

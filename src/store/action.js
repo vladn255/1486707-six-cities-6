@@ -1,35 +1,36 @@
-import {getFilteredPlaceCards} from "../utils.js";
-import initialPlaceCards from "../mocks/offers.js";
 
 const ActionType = {
   CHANGE_CITY: `locationItem/changeCity`,
   SET_PLACE_CARDS: `main/setPlaceCards`,
-  SET_ACTIVE_CARD_ID: `placesList/setActiveCardId`
+  SET_ACTIVE_CARD_ID: `placesList/setActiveCardId`,
+  LOAD_PLACE_CARDS: `data/loadPlaceCards`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`
 };
 
 const ActionCreator = {
-  changeCity: (city) => {
-    const placeCards = getFilteredPlaceCards(initialPlaceCards, city);
-    return {
-      type: ActionType.CHANGE_CITY,
-      payload: {
-        city,
-        placeCards
-      }
-    };
-  },
+  changeCity: (city) => ({
+    type: ActionType.CHANGE_CITY,
+    payload: city
+  }),
 
-  setPlaceCards: (cards) => {
-
-    return {
-      type: ActionType.SET_PLACE_CARDS,
-      payload: cards
-    };
-  },
+  setPlaceCards: (cards) => ({
+    type: ActionType.SET_PLACE_CARDS,
+    payload: cards
+  }),
 
   setActiveCard: (cardId) => ({
     type: ActionType.SET_ACTIVE_CARD_ID,
     payload: cardId
+  }),
+
+  loadPlaceCards: (cards) => ({
+    type: ActionType.LOAD_PLACE_CARDS,
+    payload: cards
+  }),
+
+  requireAuthorization: () => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status
   })
 };
 
