@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -16,8 +16,6 @@ import MainEmpty from '../main-empty/main-empty.jsx';
 import LoadingScreen from "../loading-screen/loading-screen";
 
 const App = ({placeCards, reviewList, isDataLoaded}) => {
-  useEffect(() => {}, [isDataLoaded]);
-
   return (
     <BrowserRouter>
       <Switch>

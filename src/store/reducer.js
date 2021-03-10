@@ -1,9 +1,11 @@
 import {ActionType} from "./action.js";
-import {CityList, AuthorizationStatus} from "../const.js";
+import {CityList, SortItems, AuthorizationStatus} from "../const.js";
 import {getFilteredPlaceCards} from "../utils.js";
 
 const initialState = {
   selectedCity: CityList[0],
+  initialSortItem: SortItems.POPULAR,
+  currentSortItem: SortItems.POPULAR,
   initialPlaceCards: [],
   placeCards: [],
   unSortedPlaceCards: [],
@@ -21,7 +23,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedCity: action.payload,
         unSortedPlaceCards: filteredPlaceCards,
-        placeCards: filteredPlaceCards
+        placeCards: filteredPlaceCards,
+        currentSortItem: state.initialSortItem
       };
 
     case ActionType.SET_PLACE_CARDS:
@@ -37,7 +40,6 @@ const reducer = (state = initialState, action) => {
       };
 
     case ActionType.LOAD_PLACE_CARDS:
-
       return {
         ...state,
         initialPlaceCards: action.payload.initialPlaceCards,
@@ -46,10 +48,22 @@ const reducer = (state = initialState, action) => {
         isDataLoaded: true
       };
 
+    case ActionType.LOAD_PLACE_CARDS_NEARBY:
+      return {
+        ...state,
+        placeCardsNearby: action.payload
+      };
+
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload
+      };
+
+    case ActionType.SET_SORT_ITEM:
+      return {
+        ...state,
+        currentSortItem: action.payload
       };
 
     default:

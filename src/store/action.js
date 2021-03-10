@@ -4,7 +4,9 @@ const ActionType = {
   SET_PLACE_CARDS: `main/setPlaceCards`,
   SET_ACTIVE_CARD_ID: `placesList/setActiveCardId`,
   LOAD_PLACE_CARDS: `data/loadPlaceCards`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`
+  LOAD_PLACE_CARDS_NEARBY: `offer/loadPlaceCardsNearby`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_SORT_ITEM: `main/setSortItem`
 };
 
 const ActionCreator = {
@@ -28,9 +30,19 @@ const ActionCreator = {
     payload: cards
   }),
 
+  loadPlaceCardsNearby: (cards) => ({
+    type: ActionType.LOAD_PLACE_CARDS_NEARBY,
+    payload: cards
+  }),
+
   requireAuthorization: () => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status
+  }),
+
+  setSortItem: (sortItem) => ({
+    type: ActionType.SET_SORT_ITEM,
+    payload: sortItem
   })
 };
 
