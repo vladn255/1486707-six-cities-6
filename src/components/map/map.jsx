@@ -6,31 +6,19 @@ import {connect} from 'react-redux';
 
 import {cityType} from "../../types.js";
 
-const Map = ({city, points, activeCardId}) => {
+const ZOOM = 13;
+
+const Map = ({city, placeCards, activeCardId}) => {
   const {location} = city;
 
   const getIcon = (id, activePointId) => {
-    let icon;
-    if (id === activePointId) {
-      icon = leaflet.icon({
-        iconUrl: `img/pin-active.svg`,
+    return (
+      leaflet.icon({
+        iconUrl: ((id === activePointId) ? `img/pin-active.svg` : `img/pin.svg`),
         iconSize: [30, 30]
-      });
-    } else {
-      icon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
-        iconSize: [30, 30]
-      });
-    }
-    return icon;
+      })
+    );
   };
-
-  // const icon = leaflet.icon({
-  //   iconUrl: `img/pin.svg`,
-  //   iconSize: [30, 30]
-  // });
-
-  const ZOOM = 12;
 
   const mapRef = useRef();
 
@@ -50,7 +38,8 @@ const Map = ({city, points, activeCardId}) => {
       })
       .addTo(mapRef.current);
 
-    points.forEach(({title, city: {location: {latitude, longitude, zoom}}, id}) => {
+    placeCards.forEach(({title, location: {latitude, longitude, zoom}, id}) => {
+
       leaflet.marker({
         lat: latitude,
         lng: longitude,
@@ -75,7 +64,7 @@ const Map = ({city, points, activeCardId}) => {
 
 Map.propTypes = {
   city: cityType,
-  points: PropTypes.arrayOf(PropTypes.shape({
+  placeCards: PropTypes.arrayOf(PropTypes.shape({
     city: PropTypes.shape({
       location: PropTypes.shape({
         latitude: PropTypes.number.isRequired,
@@ -87,9 +76,10 @@ Map.propTypes = {
   activeCardId: PropTypes.number.isRequired
 };
 
-const mapStateToProps = ({selectedCity, activeCardId}) => ({
+const mapStateToProps = ({selectedCity, activeCardId, unSortedPlaceCards}) => ({
   city: selectedCity,
-  activeCardId
+  activeCardId,
+  placeCards: unSortedPlaceCards
 });
 
 export {Map};

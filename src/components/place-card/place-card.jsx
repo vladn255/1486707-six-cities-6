@@ -6,7 +6,7 @@ import {placeCardType} from "../../types.js";
 import {getRatingWidth} from "../../utils.js";
 
 const PlaceCard = ({placeCard, mouseOverHandler}) => {
-  const {id, previewImage, price, priceText, rating, title, type, isPremium, isFavorite} = placeCard;
+  const {id, previewImage, price, rating, title, type, isPremium, isFavorite} = (placeCard);
 
   return (
     <article className="cities__place-card place-card"
@@ -29,7 +29,7 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{priceText}</span>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className=
             {isFavorite

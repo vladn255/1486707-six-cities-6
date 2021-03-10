@@ -166,8 +166,9 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedCity: state.selectedCity
+const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
+  selectedCity,
+  placeCardsNearby
 });
 
 Offer.propTypes = {

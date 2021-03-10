@@ -13,7 +13,6 @@ const getActiveCityClass = (cityName, selectedCityName) => {
 };
 
 const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
-
   return (
     <li
       className="locations__item"
@@ -39,9 +38,8 @@ const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
 
 LocationItem.propTypes = LocationType;
 
-const mapStateToProps = ({selectedCity, initialPlaceCards}) => ({
-  selectedCity,
-  placeCards: initialPlaceCards
+const mapStateToProps = ({selectedCity}) => ({
+  selectedCity
 });
 
 const mapDispatchToProps = (dispatch) => ({

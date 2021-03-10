@@ -34,32 +34,32 @@ const CityList = [
   {
     id: 1,
     name: `Paris`,
-    location: [52.35333, 4.8]
+    location: [48.85661, 2.351499]
   },
   {
     id: 2,
     name: `Cologne`,
-    location: [52.36333, 4.7]
+    location: [50.938361, 6.959974]
   },
   {
     id: 3,
     name: `Brussels`,
-    location: [52.34333, 4.6]
+    location: [50.846557, 4.351697]
   },
   {
     id: 4,
     name: `Amsterdam`,
-    location: [52.38333, 4.9]
+    location: [52.37454, 4.897976]
   },
   {
     id: 5,
     name: `Hamburg`,
-    location: [52.39333, 4.5]
+    location: [53.550341, 10.000654]
   },
   {
     id: 6,
     name: `Dusseldorf`,
-    location: [52.40333, 4.4]
+    location: [51.225402, 6.776314]
   }
 ];
 
@@ -70,10 +70,16 @@ const SortItems = {
   TOP_RATED_FIRST: `Top rated first`
 };
 
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`
+};
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
   StarsList,
   CityList,
-  SortItems
+  SortItems,
+  AuthorizationStatus
 };

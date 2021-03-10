@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {ActionCreator} from '../../store/action.js';
-import {functionType, placeCardsType} from "../../types.js";
+import {placeCardsType} from "../../types.js";
 
 import PlaceCard from "../place-card/place-card.jsx";
 
-const PlacesList = ({placeCards, onSetActiveCard}) => {
+const PlacesList = ({placeCards, setActivePlaceCard}) => {
   const mouseOverHandler = (articleId) => {
-    onSetActiveCard(articleId);
+    setActivePlaceCard(articleId);
   };
 
   return (
@@ -20,15 +21,16 @@ const PlacesList = ({placeCards, onSetActiveCard}) => {
 
 PlacesList.propTypes = {
   placeCards: placeCardsType,
-  onSetActiveCard: functionType
+  setActivePlaceCard: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({activeCardId}) => ({
-  activeCardId
+const mapStateToProps = ({activeCardId, placeCards}) => ({
+  activeCardId,
+  placeCards
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetActiveCard(articleId) {
+  setActivePlaceCard(articleId) {
     dispatch(ActionCreator.setActiveCard(articleId));
   }
 });
