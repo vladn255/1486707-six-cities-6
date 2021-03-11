@@ -1,18 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import {placeCardsType, cityType} from "../../types.js";
-import {AuthorizationStatus, RoutePath} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import LocationList from "../location-list/location-list.jsx";
 import Map from "../map/map.jsx";
 import SortMenu from "../sort-menu-items/sort-menu-items.jsx";
+import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 
 
-const Main = ({placeCards, selectedCity, authorizationStatus, currentUser: {avatarUrl, email}}) => {
+const Main = ({placeCards, selectedCity}) => {
 
   return (
     <div className="page page--gray page--main">
@@ -25,24 +23,7 @@ const Main = ({placeCards, selectedCity, authorizationStatus, currentUser: {avat
               </a>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link to={RoutePath.FAVORITES} className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"
-                      style={authorizationStatus === AuthorizationStatus.AUTH
-                        ? {backgroundImage: avatarUrl}
-                        : {}
-                      }
-                    >
-                    </div>
-                    <span className="header__user-name user__name">
-                      {authorizationStatus === AuthorizationStatus.AUTH
-                        ? `${email}`
-                        : `Sign in`}
-                    </span>
-                  </Link>
-                </li>
-              </ul>
+              <HeaderUserInfo />
             </nav>
           </div>
         </div>
@@ -89,18 +70,11 @@ const Main = ({placeCards, selectedCity, authorizationStatus, currentUser: {avat
 Main.propTypes = {
   placeCards: placeCardsType,
   selectedCity: cityType,
-  authorizationStatus: PropTypes.string.isRequired,
-  currentUser: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
-  })
 };
 
-const mapStateToProps = ({placeCards, selectedCity, authorizationStatus, currentUser}) => ({
+const mapStateToProps = ({placeCards, selectedCity}) => ({
   placeCards,
-  selectedCity,
-  authorizationStatus,
-  currentUser
+  selectedCity
 });
 
 export {Main};

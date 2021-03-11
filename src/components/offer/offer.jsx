@@ -1,17 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
 import {getRatingWidth} from "../../utils.js";
-import {AuthorizationStatus, RoutePath} from "../../const.js";
+import {RoutePath} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
+import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 
-const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity, authorizationStatus, currentUser: {avatarUrl, email}}) => {
+const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
 
@@ -26,24 +26,7 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity, authoriza
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"
-                      style={authorizationStatus === AuthorizationStatus.AUTH
-                        ? {backgroundImage: avatarUrl}
-                        : {}
-                      }
-                    >
-                    </div>
-                    <span className="header__user-name user__name">
-                      {authorizationStatus === AuthorizationStatus.AUTH
-                        ? `${email}`
-                        : `Sign in`}
-                    </span>
-                  </a>
-                </li>
-              </ul>
+              <HeaderUserInfo />
             </nav>
           </div>
         </div>
@@ -182,18 +165,11 @@ Offer.propTypes = {
   placeCardsNearby: placeCardsType,
   reviewList: reviewListType,
   selectedCity: cityType,
-  authorizationStatus: PropTypes.string.isRequired,
-  currentUser: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
-  })
 };
 
-const mapStateToProps = ({selectedCity, placeCardsNearby, authorizationStatus, currentUser}) => ({
+const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
   selectedCity,
-  placeCardsNearby,
-  authorizationStatus,
-  currentUser
+  placeCardsNearby
 });
 
 export {Offer};

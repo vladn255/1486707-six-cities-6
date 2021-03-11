@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {login} from "../../store/api-actions.js";
+import {checkAuth, login} from "../../store/api-actions.js";
 import {RoutePath} from '../../const.js';
 
 
@@ -15,7 +15,7 @@ const Login = ({onSubmit}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
+    history.push(RoutePath.MAIN);
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value
@@ -63,7 +63,7 @@ const Login = ({onSubmit}) => {
                 <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required=""/>
               </div>
               <button className="login__submit form__submit button" type="submit"
-                onClick={() => history.push(`/`)}
+
               >Sign in</button>
             </form>
           </section>
@@ -86,7 +86,10 @@ Login.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
-    dispatch(login(authData));
+    dispatch(login(authData))
+    .then(() => {
+      dispatch(checkAuth());
+    });
   }
 });
 
