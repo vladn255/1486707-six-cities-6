@@ -13,7 +13,8 @@ import LoginScreen from "../login/login.jsx";
 import OfferScreen from "../offer/offer.jsx";
 import NotFoundScreen from "../not-found/not-found.jsx";
 import MainEmpty from '../main-empty/main-empty.jsx';
-import LoadingScreen from "../loading-screen/loading-screen";
+import LoadingScreen from "../loading-screen/loading-screen.jsx";
+import PrivateRoute from "../private-route/private-route.jsx";
 
 const App = ({placeCards, reviewList, isDataLoaded}) => {
   return (
@@ -33,9 +34,10 @@ const App = ({placeCards, reviewList, isDataLoaded}) => {
           <LoginScreen />
         </Route>
 
-        <Route exact path={RoutePath.FAVORITES}>
-          <FavoritesScreen placeCards={placeCards} />
-        </Route>
+        <PrivateRoute exact
+          path={RoutePath.FAVORITES}
+          render={() => <FavoritesScreen />}>
+        </PrivateRoute>
 
         <Route exact path={RoutePath.OFFER} render={({match}) => {
           const placeCard = placeCards.find(({id}) => id === Number(match.params.id));

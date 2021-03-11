@@ -6,7 +6,8 @@ const ActionType = {
   LOAD_PLACE_CARDS: `data/loadPlaceCards`,
   LOAD_PLACE_CARDS_NEARBY: `offer/loadPlaceCardsNearby`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
-  SET_SORT_ITEM: `main/setSortItem`
+  SET_SORT_ITEM: `main/setSortItem`,
+  SET_CURRENT_USER: `data/setCurrentUser`
 };
 
 const ActionCreator = {
@@ -35,7 +36,7 @@ const ActionCreator = {
     payload: cards
   }),
 
-  requireAuthorization: () => ({
+  requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status
   }),
@@ -43,6 +44,11 @@ const ActionCreator = {
   setSortItem: (sortItem) => ({
     type: ActionType.SET_SORT_ITEM,
     payload: sortItem
+  }),
+
+  setCurrentUser: (data) => ({
+    type: ActionType.SET_CURRENT_USER,
+    payload: data
   })
 };
 

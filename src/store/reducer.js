@@ -10,9 +10,16 @@ const initialState = {
   placeCards: [],
   unSortedPlaceCards: [],
   placeCardsNearby: [],
-  activeCardId: 0,
+  activeCardId: -1,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoaded: false
+  isDataLoaded: false,
+  currentUser: {
+    avatarUrl: ``,
+    email: ``,
+    id: -1,
+    isPro: false,
+    name: ``
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -64,6 +71,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentSortItem: action.payload
+      };
+
+    case ActionType.SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: {
+          avatarUrl: action.payload.avatarUrl,
+          email: action.payload.email,
+          id: action.payload.id,
+          isPro: action.payload.isPro,
+          name: action.payload.name
+        }
       };
 
     default:
