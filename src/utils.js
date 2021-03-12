@@ -26,11 +26,21 @@ const adaptPlaceCardToClient = (card) => Object.assign(
 
 const getFilteredPlaceCards = (initialCards, city) => initialCards.slice().filter((placeCard) => placeCard.city.name === city.name);
 
+const adaptLoginDataToClient = (data) => Object.assign(
+    {},
+    data,
+    {
+      avatarUrl: data.avatar_url,
+      isPro: data.is_pro
+    }
+);
+
 export {
   getRatingWidth,
   getFilteredPlaceCards,
   sortByPriceUp,
   sortByPriceDown,
   sortByRate,
-  adaptPlaceCardToClient
+  adaptPlaceCardToClient,
+  adaptLoginDataToClient
 };

@@ -1,6 +1,6 @@
 import {ActionCreator} from "./action.js";
 import {CityList, AuthorizationStatus} from "../const.js";
-import {getFilteredPlaceCards, adaptPlaceCardToClient} from "../utils.js";
+import {getFilteredPlaceCards, adaptPlaceCardToClient, adaptLoginDataToClient} from "../utils.js";
 
 const fetchPlaceCards = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -26,13 +26,25 @@ const fetchPlaceCardsNearby = (id) => (dispatch, _getState, api) => (
 
 const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-  .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+  .then((data) => {
+    const parsedData = adaptLoginDataToClient(data.data);
+    dispatch(ActionCreator.setCurrentUser({
+      ...parsedData
+    }));
+    dispatch(ActionCreator.requireAuthorization(
+        AuthorizationStatus.AUTH
+    ));
+  })
   .catch(() => {})
 );
 
 const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-.then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+  .then(() => {
+    dispatch(ActionCreator.requireAuthorization(
+        AuthorizationStatus.AUTH
+    ));
+  })
 );
 
 export {

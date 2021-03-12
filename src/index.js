@@ -13,7 +13,7 @@ import {reducer} from './store/reducer.js';
 import {ActionCreator} from './store/action.js';
 import {createAPI} from './services/api.js';
 import {AuthorizationStatus} from './const';
-import {fetchPlaceCards} from './store/api-actions';
+import {checkAuth, fetchPlaceCards} from './store/api-actions';
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -26,6 +26,7 @@ const store = createStore(
     )
 );
 
+store.dispatch(checkAuth());
 store.dispatch(fetchPlaceCards());
 
 ReactDOM.render(

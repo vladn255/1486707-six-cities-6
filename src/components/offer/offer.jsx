@@ -4,10 +4,12 @@ import {connect} from 'react-redux';
 
 import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
 import {getRatingWidth} from "../../utils.js";
+import {RoutePath} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
+import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 
 const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 
@@ -19,20 +21,12 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to="/" className="header__logo-link" >
+              <Link to={RoutePath.MAIN} className="header__logo-link" >
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
+              <HeaderUserInfo />
             </nav>
           </div>
         </div>
@@ -166,17 +160,17 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
   );
 };
 
-const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
-  selectedCity,
-  placeCardsNearby
-});
-
 Offer.propTypes = {
   placeCard: placeCardType,
   placeCardsNearby: placeCardsType,
   reviewList: reviewListType,
   selectedCity: cityType,
 };
+
+const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
+  selectedCity,
+  placeCardsNearby
+});
 
 export {Offer};
 export default connect(mapStateToProps)(Offer);
