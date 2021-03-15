@@ -3,9 +3,9 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {placeCardsType, reviewListType} from "../../types.js";
+import {placeCardsType, placeCardType} from "../../types.js";
 import {RoutePath} from "../../const.js";
-import {fetchPlaceCardsNearby} from '../../store/api-actions.js';
+import {fetchPlaceCardsNearby, fetchComments} from '../../store/api-actions.js';
 
 import MainScreen from "../main/main.jsx";
 import FavoritesScreen from "../favorites/favorites.jsx";
@@ -16,7 +16,7 @@ import MainEmpty from '../main-empty/main-empty.jsx';
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
 
-const App = ({placeCards, reviewList, isDataLoaded}) => {
+const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setReviews}) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -39,12 +39,10 @@ const App = ({placeCards, reviewList, isDataLoaded}) => {
           render={() => <FavoritesScreen />}>
         </PrivateRoute>
 
-        <Route exact path={RoutePath.OFFER} render={({match}) => {
-          const placeCard = placeCards.find(({id}) => id === Number(match.params.id));
-          fetchPlaceCardsNearby(placeCard.id);
-          return <OfferScreen
-            placeCard={placeCard}
-            reviewList={reviewList}/>;
+        <Route exact path={RoutePath.OFFER} render={() => {
+          setPlaceCardsNearby(activeCard.id);
+          setReviews(activeCard.id);
+          return <OfferScreen/>;
         }}>
         </Route>
 
@@ -58,14 +56,26 @@ const App = ({placeCards, reviewList, isDataLoaded}) => {
 
 App.propTypes = {
   placeCards: placeCardsType,
-  reviewList: reviewListType,
-  isDataLoaded: PropTypes.bool.isRequired
+  isDataLoaded: PropTypes.bool.isRequired,
+  setPlaceCardsNearby: PropTypes.func.isRequired,
+  activeCard: placeCardType,
+  setReviews: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({placeCards, isDataLoaded}) => ({
+const mapStateToProps = ({placeCards, isDataLoaded, activeCard}) => ({
   placeCards,
-  isDataLoaded
+  isDataLoaded,
+  activeCard
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setPlaceCardsNearby(cardId) {
+    dispatch(fetchPlaceCardsNearby(cardId));
+  },
+  setReviews(cardId) {
+    dispatch(fetchComments(cardId));
+  }
 });
 
 export {App};
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {ActionCreator} from '../../store/action.js';
 import {placeCardsType} from "../../types.js";
+import {fetchHotelId} from '../../store/api-actions.js';
 
 import PlaceCard from "../place-card/place-card.jsx";
 
@@ -24,14 +24,13 @@ PlacesList.propTypes = {
   setActivePlaceCard: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({activeCardId, placeCards}) => ({
-  activeCardId,
-  placeCards
+const mapStateToProps = ({activeCardId}) => ({
+  activeCardId
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setActivePlaceCard(articleId) {
-    dispatch(ActionCreator.setActiveCard(articleId));
+    dispatch(fetchHotelId(articleId));
   }
 });
 

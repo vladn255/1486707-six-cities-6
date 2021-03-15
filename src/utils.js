@@ -35,6 +35,18 @@ const adaptLoginDataToClient = (data) => Object.assign(
     }
 );
 
+const adaptReviewToClient = (review) => Object.assign(
+    {},
+    review,
+    {
+      user: {
+        ...review.user,
+        avatarUrl: review.user.avatar_url,
+        isPro: review.user.is_pro
+      }
+    }
+);
+
 export {
   getRatingWidth,
   getFilteredPlaceCards,
@@ -42,5 +54,6 @@ export {
   sortByPriceDown,
   sortByRate,
   adaptPlaceCardToClient,
-  adaptLoginDataToClient
+  adaptLoginDataToClient,
+  adaptReviewToClient
 };

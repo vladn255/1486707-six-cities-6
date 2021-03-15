@@ -1,14 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
-import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 import {connect} from 'react-redux';
 
-import {cityType} from "../../types.js";
+import {cityType, placeCardType, placeCardsType} from "../../types.js";
 
 const ZOOM = 13;
 
-const Map = ({city, placeCards, activeCardId}) => {
+const Map = ({city, placeCards, activeCard}) => {
   const {location} = city;
 
   const getIcon = (id, activePointId) => {
@@ -47,7 +46,7 @@ const Map = ({city, placeCards, activeCardId}) => {
         title
       },
       {
-        icon: getIcon(id, activeCardId)
+        icon: getIcon(id, activeCard.id)
       })
       .addTo(mapRef.current)
       .bindPopup(title);
@@ -55,7 +54,7 @@ const Map = ({city, placeCards, activeCardId}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [city, activeCardId]);
+  }, [city, activeCard.id, placeCards]);
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef} ></div>
@@ -64,22 +63,13 @@ const Map = ({city, placeCards, activeCardId}) => {
 
 Map.propTypes = {
   city: cityType,
-  placeCards: PropTypes.arrayOf(PropTypes.shape({
-    city: PropTypes.shape({
-      location: PropTypes.shape({
-        latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        zoom: PropTypes.number.isRequired})
-    }),
-    title: PropTypes.string.isRequired
-  })),
-  activeCardId: PropTypes.number.isRequired
+  placeCards: placeCardsType,
+  activeCard: placeCardType
 };
 
-const mapStateToProps = ({selectedCity, activeCardId, unSortedPlaceCards}) => ({
+const mapStateToProps = ({selectedCity, activeCard}) => ({
   city: selectedCity,
-  activeCardId,
-  placeCards: unSortedPlaceCards
+  activeCard
 });
 
 export {Map};

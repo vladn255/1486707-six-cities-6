@@ -75,11 +75,17 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`
 };
 
+const ReviewLength = {
+  MIN: 50,
+  MAX: 300
+};
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
   StarsList,
   CityList,
   SortItems,
-  AuthorizationStatus
+  AuthorizationStatus,
+  ReviewLength
 };

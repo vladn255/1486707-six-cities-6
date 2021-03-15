@@ -10,10 +10,16 @@ import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
+import NotFound from "../not-found/not-found.jsx";
 
-const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
+const Offer = ({activeCard, placeCardsNearby}) => {
+  if (activeCard.id === -1) {
+    return (
+      <NotFound />
+    );
+  }
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = activeCard;
 
   return (
     <div className="page">
@@ -133,15 +139,15 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
                 </div>
               </div>
 
-              <ReviewForm reviewList={reviewList}/>
+              <ReviewForm
+                activeCard={activeCard}/>
 
             </div>
           </div>
           <section className="property__map map">
 
             <Map
-              city = {selectedCity}
-              points = {placeCardsNearby.map((card) => card)} />
+              placeCards = {placeCardsNearby} />
 
           </section>
         </section>
@@ -161,15 +167,17 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 };
 
 Offer.propTypes = {
-  placeCard: placeCardType,
+  activeCard: placeCardType,
   placeCardsNearby: placeCardsType,
   reviewList: reviewListType,
-  selectedCity: cityType,
+  selectedCity: cityType
 };
 
-const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
+const mapStateToProps = ({selectedCity, placeCardsNearby, activeCard, reviews}) => ({
   selectedCity,
-  placeCardsNearby
+  placeCardsNearby,
+  activeCard,
+  reviewList: reviews
 });
 
 export {Offer};

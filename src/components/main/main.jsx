@@ -48,7 +48,7 @@ const Main = ({placeCards, selectedCity}) => {
 
               <div className="cities__places-list places__list tabs__content">
 
-                <PlacesList />
+                <PlacesList placeCards = {placeCards} />
 
               </div>
             </section>
@@ -56,7 +56,7 @@ const Main = ({placeCards, selectedCity}) => {
               <section className="cities__map map">
 
                 <Map
-                  points = {placeCards.map((card) => card)} />
+                  placeCards = {placeCards.map((card) => card)} />
 
               </section>
             </div>
