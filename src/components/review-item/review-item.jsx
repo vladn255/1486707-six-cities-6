@@ -5,7 +5,7 @@ import {getRatingWidth} from "../../utils.js";
 
 const ReviewItem = ({reviewItem}) => {
   const {comment, date, rating, user} = reviewItem;
-  const {avatarUrl, name, isPro} = user;
+  const {avatarUrl, name} = user;
   const newDate = new Date(date);
   const dateParsedToText = newDate.toLocaleString(`en-us`, {month: `long`, year: `numeric`});
   const dateParsedToDataText = newDate.toISOString().slice(0, 10);
@@ -14,11 +14,8 @@ const ReviewItem = ({reviewItem}) => {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className={`reviews__avatar user__avatar ${isPro
-            ? `property__avatar-wrapper--pro`
-            : ``}
-            `}
-          src={avatarUrl} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar"
+            src={avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
           {name}

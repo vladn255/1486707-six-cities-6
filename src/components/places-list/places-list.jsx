@@ -7,9 +7,11 @@ import {fetchHotelId} from '../../store/api-actions.js';
 
 import PlaceCard from "../place-card/place-card.jsx";
 
-const PlacesList = ({placeCards, setActivePlaceCard}) => {
+const PlacesList = ({placeCards, setActivePlaceCard, isMapChanging}) => {
   const mouseOverHandler = (articleId) => {
-    setActivePlaceCard(articleId);
+    if (isMapChanging === true) {
+      setActivePlaceCard(articleId);
+    }
   };
 
   return (
@@ -21,7 +23,8 @@ const PlacesList = ({placeCards, setActivePlaceCard}) => {
 
 PlacesList.propTypes = {
   placeCards: placeCardsType,
-  setActivePlaceCard: PropTypes.func.isRequired
+  setActivePlaceCard: PropTypes.func.isRequired,
+  isMapChanging: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({activeCardId}) => ({

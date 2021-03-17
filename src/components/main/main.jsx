@@ -48,7 +48,7 @@ const Main = ({placeCards, selectedCity}) => {
 
               <div className="cities__places-list places__list tabs__content">
 
-                <PlacesList placeCards = {placeCards} />
+                <PlacesList placeCards = {placeCards} isMapChanging={true}/>
 
               </div>
             </section>

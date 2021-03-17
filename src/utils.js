@@ -47,6 +47,8 @@ const adaptReviewToClient = (review) => Object.assign(
     }
 );
 
+const sortReviewsByDate = (reviewA, reviewB) => reviewA.date - reviewB.date;
+
 export {
   getRatingWidth,
   getFilteredPlaceCards,
@@ -55,5 +57,6 @@ export {
   sortByRate,
   adaptPlaceCardToClient,
   adaptLoginDataToClient,
-  adaptReviewToClient
+  adaptReviewToClient,
+  sortReviewsByDate
 };

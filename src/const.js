@@ -10,11 +10,11 @@ const MAX_RATING_PERCENT = 5 / 100;
 const StarsList = [
   {
     count: 1,
-    title: `terribly`
+    title: `perfect`
   },
   {
     count: 2,
-    title: `badly`
+    title: `good`
   },
   {
     count: 3,
@@ -22,11 +22,11 @@ const StarsList = [
   },
   {
     count: 4,
-    title: `good`
+    title: `badly`
   },
   {
     count: 5,
-    title: `perfect`
+    title: `terribly`
   },
 ];
 
@@ -80,6 +80,8 @@ const ReviewLength = {
   MAX: 300
 };
 
+const REVIEW_COUNT = 10;
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
@@ -87,5 +89,6 @@ export {
   CityList,
   SortItems,
   AuthorizationStatus,
-  ReviewLength
+  ReviewLength,
+  REVIEW_COUNT
 };

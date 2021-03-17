@@ -58,7 +58,8 @@ const initialState = {
   },
 
   reviews: [],
-  submitStatus: false
+  submitStatus: false,
+  favoriteCards: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -134,6 +135,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         submitStatus: action.payload
+      };
+
+    case ActionType.SET_FAVORITE_CARDS:
+      return {
+        ...state,
+        favoriteCards: action.payload
       };
 
     default:

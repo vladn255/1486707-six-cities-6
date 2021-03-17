@@ -11,15 +11,22 @@ import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 import NotFound from "../not-found/not-found.jsx";
+import FavoriteButton from "../favorite-button/favorite-button.jsx";
+
+const FAVORITE_BUTTON = {
+  width: 31,
+  height: 33
+};
 
 const Offer = ({activeCard, placeCardsNearby}) => {
+
   if (activeCard.id === -1) {
     return (
       <NotFound />
     );
   }
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = activeCard;
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = activeCard;
 
   return (
     <div className="page">
@@ -65,19 +72,13 @@ const Offer = ({activeCard, placeCardsNearby}) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className=
 
-                  {isFavorite
-                    ? `place-card__bookmark-button place-card__bookmark-button--active button`
-                    : `place-card__bookmark-button button`
-                  }
+                <FavoriteButton
+                  placeCard={activeCard}
+                  buttonWidth={FAVORITE_BUTTON.width}
+                  buttonHeight={FAVORITE_BUTTON.height}
+                />
 
-                type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -140,7 +141,7 @@ const Offer = ({activeCard, placeCardsNearby}) => {
               </div>
 
               <ReviewForm
-                activeCard={activeCard}/>
+                activeCardId={activeCard.id}/>
 
             </div>
           </div>
@@ -156,7 +157,7 @@ const Offer = ({activeCard, placeCardsNearby}) => {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <PlacesList placeCards = {placeCardsNearby}/>
+              <PlacesList placeCards = {placeCardsNearby} isMapChanging={false}/>
 
             </div>
           </section>

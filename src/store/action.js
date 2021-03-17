@@ -9,7 +9,8 @@ const ActionType = {
   SET_SORT_ITEM: `main/setSortItem`,
   SET_CURRENT_USER: `data/setCurrentUser`,
   LOAD_REVIEWS: `data/loadReviews`,
-  SET_SUBMIT_STATUS: `offerForm/setSubmitStatus`
+  SET_SUBMIT_STATUS: `offerForm/setSubmitStatus`,
+  SET_FAVORITE_CARDS: `data/setFavoriteCards`
 };
 
 const ActionCreator = {
@@ -61,6 +62,11 @@ const ActionCreator = {
   setSubmitStatus: (status) => ({
     type: ActionType.SET_SUBMIT_STATUS,
     payload: status
+  }),
+
+  setFavoriteCards: (cards) => ({
+    type: ActionType.SET_FAVORITE_CARDS,
+    payload: cards
   })
 };
 

@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {placeCardsType, placeCardType} from "../../types.js";
-import {RoutePath} from "../../const.js";
-import {fetchPlaceCardsNearby, fetchComments} from '../../store/api-actions.js';
+import {RoutePath, AuthorizationStatus} from "../../const.js";
+import {fetchPlaceCardsNearby, fetchComments, fetchFavoriteCards} from '../../store/api-actions.js';
 
 import MainScreen from "../main/main.jsx";
 import FavoritesScreen from "../favorites/favorites.jsx";
@@ -16,7 +16,7 @@ import MainEmpty from '../main-empty/main-empty.jsx';
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
 
-const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setReviews}) => {
+const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setReviews, authorizationStatus, getFavoriteCards}) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -30,13 +30,19 @@ const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setRevi
         }}>
         </Route>
 
-        <Route exact path={RoutePath.LOGIN}>
-          <LoginScreen />
+        <Route exact path={RoutePath.LOGIN} render={() => {
+          return authorizationStatus === AuthorizationStatus.AUTH
+            ? <MainScreen />
+            : <LoginScreen />;
+        }}>
         </Route>
 
         <PrivateRoute exact
           path={RoutePath.FAVORITES}
-          render={() => <FavoritesScreen />}>
+          render={() => {
+            getFavoriteCards();
+            return <FavoritesScreen />;
+          }}>
         </PrivateRoute>
 
         <Route exact path={RoutePath.OFFER} render={() => {
@@ -59,13 +65,16 @@ App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   setPlaceCardsNearby: PropTypes.func.isRequired,
   activeCard: placeCardType,
-  setReviews: PropTypes.func.isRequired
+  setReviews: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  getFavoriteCards: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({placeCards, isDataLoaded, activeCard}) => ({
+const mapStateToProps = ({placeCards, isDataLoaded, activeCard, authorizationStatus}) => ({
   placeCards,
   isDataLoaded,
-  activeCard
+  activeCard,
+  authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -74,6 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setReviews(cardId) {
     dispatch(fetchComments(cardId));
+  },
+  getFavoriteCards() {
+    dispatch(fetchFavoriteCards());
   }
 });
 
