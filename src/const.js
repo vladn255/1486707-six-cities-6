@@ -2,7 +2,7 @@ const RoutePath = {
   MAIN: `/`,
   LOGIN: `/login`,
   FAVORITES: `/favorites`,
-  OFFER: `/offer/:id?`
+  OFFER: `/offer`
 };
 
 const MAX_RATING_PERCENT = 5 / 100;
@@ -10,11 +10,11 @@ const MAX_RATING_PERCENT = 5 / 100;
 const StarsList = [
   {
     count: 1,
-    title: `terribly`
+    title: `perfect`
   },
   {
     count: 2,
-    title: `badly`
+    title: `good`
   },
   {
     count: 3,
@@ -22,11 +22,11 @@ const StarsList = [
   },
   {
     count: 4,
-    title: `good`
+    title: `badly`
   },
   {
     count: 5,
-    title: `perfect`
+    title: `terribly`
   },
 ];
 
@@ -75,11 +75,20 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`
 };
 
+const ReviewLength = {
+  MIN: 50,
+  MAX: 300
+};
+
+const REVIEW_COUNT = 10;
+
 export {
   RoutePath,
   MAX_RATING_PERCENT,
   StarsList,
   CityList,
   SortItems,
-  AuthorizationStatus
+  AuthorizationStatus,
+  ReviewLength,
+  REVIEW_COUNT
 };

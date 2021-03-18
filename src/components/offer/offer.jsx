@@ -2,18 +2,31 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
-import {getRatingWidth} from "../../utils.js";
+import {placeCardType, placeCardsType, reviewListType} from "../../types.js";
+import {getRatingWidth, targetCity} from "../../utils.js";
 import {RoutePath} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from "../map/map.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
+import NotFound from "../not-found/not-found.jsx";
+import FavoriteButton from "../favorite-button/favorite-button.jsx";
 
-const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
+const FAVORITE_BUTTON = {
+  width: 31,
+  height: 33
+};
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = placeCard;
+const Offer = ({activeCard, placeCardsNearby}) => {
+
+  if (activeCard.id === -1) {
+    return (
+      <NotFound />
+    );
+  }
+
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = activeCard;
 
   return (
     <div className="page">
@@ -59,19 +72,13 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className=
 
-                  {isFavorite
-                    ? `place-card__bookmark-button place-card__bookmark-button--active button`
-                    : `place-card__bookmark-button button`
-                  }
+                <FavoriteButton
+                  placeCard={activeCard}
+                  buttonWidth={FAVORITE_BUTTON.width}
+                  buttonHeight={FAVORITE_BUTTON.height}
+                />
 
-                type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -133,15 +140,16 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
                 </div>
               </div>
 
-              <ReviewForm reviewList={reviewList}/>
+              <ReviewForm
+                activeCardId={activeCard.id}/>
 
             </div>
           </div>
           <section className="property__map map">
 
             <Map
-              city = {selectedCity}
-              points = {placeCardsNearby.map((card) => card)} />
+              placeCards = {placeCardsNearby}
+              city = {targetCity(activeCard.city.name)} />
 
           </section>
         </section>
@@ -150,7 +158,7 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <PlacesList placeCards = {placeCardsNearby}/>
+              <PlacesList placeCards = {placeCardsNearby} isMapChanging={false}/>
 
             </div>
           </section>
@@ -161,15 +169,15 @@ const Offer = ({placeCard, placeCardsNearby, reviewList, selectedCity}) => {
 };
 
 Offer.propTypes = {
-  placeCard: placeCardType,
+  activeCard: placeCardType,
   placeCardsNearby: placeCardsType,
-  reviewList: reviewListType,
-  selectedCity: cityType,
+  reviewList: reviewListType
 };
 
-const mapStateToProps = ({selectedCity, placeCardsNearby}) => ({
-  selectedCity,
-  placeCardsNearby
+const mapStateToProps = ({placeCardsNearby, activeCard, reviews}) => ({
+  placeCardsNearby,
+  activeCard,
+  reviewList: reviews
 });
 
 export {Offer};

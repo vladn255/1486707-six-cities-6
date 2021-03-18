@@ -10,16 +10,56 @@ const initialState = {
   placeCards: [],
   unSortedPlaceCards: [],
   placeCardsNearby: [],
-  activeCardId: -1,
+
+  activeCard: {
+    bedrooms: 0,
+    city: {
+      location: {
+        latitude: 0,
+        longitude: 0,
+        zoom: 0
+      },
+      name: ``
+    },
+    description: ``,
+    goods: [],
+    host: {
+      avatarUrl: ``,
+      id: -1,
+      isPro: false,
+      name: ``
+    },
+    id: -1,
+    images: [],
+    isPremium: false,
+    isFavorite: false,
+    location: {
+      latitude: 0,
+      longitude: 0,
+      zoom: 0
+    },
+    maxAdults: 0,
+    previewImage: ``,
+    price: 0,
+    rating: 0,
+    title: ``,
+    type: ``
+  },
+
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
+
   currentUser: {
     avatarUrl: ``,
     email: ``,
     id: -1,
     isPro: false,
     name: ``
-  }
+  },
+
+  reviews: [],
+  submitStatusDisabled: false,
+  favoriteCards: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,10 +80,10 @@ const reducer = (state = initialState, action) => {
         placeCards: action.payload
       };
 
-    case ActionType.SET_ACTIVE_CARD_ID:
+    case ActionType.SET_ACTIVE_CARD:
       return {
         ...state,
-        activeCardId: action.payload
+        activeCard: action.payload
       };
 
     case ActionType.LOAD_PLACE_CARDS:
@@ -83,6 +123,30 @@ const reducer = (state = initialState, action) => {
           isPro: action.payload.isPro,
           name: action.payload.name
         }
+      };
+
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload
+      };
+
+    case ActionType.SET_SUBMIT_STATUS_DISABLED:
+      return {
+        ...state,
+        submitStatusDisabled: action.payload
+      };
+
+    case ActionType.SET_FAVORITE_CARDS:
+      return {
+        ...state,
+        favoriteCards: action.payload
+      };
+
+    case ActionType.SET_CITY:
+      return {
+        ...state,
+        selectedCity: action.payload
       };
 
     default:

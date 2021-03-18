@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import {placeCardType} from "../../types.js";
 import {getRatingWidth} from "../../utils.js";
@@ -13,27 +12,17 @@ const FAVORITE_BUTTON = {
   height: 19
 };
 
-const PlaceCard = ({placeCard, mouseOverHandler}) => {
-  const {id, previewImage, price, rating, title, type, isPremium} = (placeCard);
+const FavoritePlaceCard = ({placeCard}) => {
+  const {previewImage, price, rating, title, type} = (placeCard);
 
   return (
-    <article className="cities__place-card place-card"
-      onMouseOver={() => {
-        mouseOverHandler(id);
-      }}>
-
-      {isPremium
-        ? <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-        : null }
-
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${RoutePath.OFFER}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+    <article className="favorites__card place-card">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
+        <Link to={RoutePath.OFFER}>
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -64,9 +53,8 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
   );
 };
 
-PlaceCard.propTypes = {
-  placeCard: placeCardType,
-  mouseOverHandler: PropTypes.func.isRequired
+FavoritePlaceCard.propTypes = {
+  placeCard: placeCardType
 };
 
-export default PlaceCard;
+export default FavoritePlaceCard;

@@ -1,42 +1,55 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-import {StarsList} from "../../const.js";
-
-import ReviewList from "../reviews-list/reviews-list.jsx";
+import {StarsList, ReviewLength, AuthorizationStatus} from "../../const.js";
+import {ActionCreator} from "../../store/action.js";
+import {postReview} from '../../store/api-actions.js';
 import {reviewListType} from '../../types.js';
 
-const ReviewStar = ({count, title, handler}) => {
-  return (<>
-    <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio" onChange={handler}/>
-    <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={title}>
-      <svg className="form__star-image" width="37" height="33">
-        <use xlinkHref="#icon-star"></use>
-      </svg>
-    </label>
-  </>
-  );
-};
+import ReviewList from "../reviews-list/reviews-list.jsx";
+import ReviewStar from "../review-star/review-star.jsx";
 
-const ReviewForm = ({reviewList}) => {
-
+const ReviewForm = ({reviewList, submitStatusDisabled, activeCardId, createReview, authorizationStatus, setSubmitStatusDisabled}) => {
   const [userReview, setReviewForm] = useState({
-    reviewText: ``,
-    reviewRate: ``
+    comment: ``,
+    rating: 0
   });
+
+  const [submitErrorStatus, setSubmitErrorStatus] = useState(false);
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+
+  const checkFormFilled = (rate, text) => {
+    return setSubmitButtonDisabled(!(rate !== 0
+        && (text.length >= ReviewLength.MIN && text.length < ReviewLength.MAX)));
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    setSubmitStatusDisabled(true);
+
+    createReview(activeCardId, userReview)
+    .then(() => setSubmitErrorStatus(false))
+    .catch(() => setSubmitErrorStatus(true));
+
+    evt.currentTarget.reset();
+
+    setReviewForm({comment: ``, rating: 0});
+    setSubmitStatusDisabled(true);
   };
 
   const handleRateChange = (evt) => {
     const {value} = evt.target;
-    setReviewForm({...userReview, reviewRate: value});
+    setReviewForm({...userReview, rating: parseInt(value, 10)});
+    checkFormFilled(userReview.rating, userReview.comment);
   };
 
-  const handleReviewTextChange = (evt) => {
+  const handleCommentChange = (evt) => {
     const {value} = evt.target;
-    setReviewForm({...userReview, reviewText: value});
+    setReviewForm({...userReview, comment: value});
+    checkFormFilled(userReview.rating, userReview.comment);
   };
 
   return (
@@ -47,34 +60,58 @@ const ReviewForm = ({reviewList}) => {
         reviewList={reviewList}
       />
 
-      <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
-        <label className="reviews__label form__label" htmlFor="review">Your review</label>
-        <div className="reviews__rating-form form__rating">
-
-          {StarsList.map((star) => <ReviewStar key={star.count.toString()} count={star.count} title={star.title} handler={handleRateChange}/>)}
-
-        </div>
-        <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleReviewTextChange}></textarea>
-        <div className="reviews__button-wrapper">
-          <p className="reviews__help">
+      {authorizationStatus === AuthorizationStatus.NO_AUTH
+        ? <> </>
+        : <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+          <label className="reviews__label form__label" htmlFor="review">Your review</label>
+          <div className="reviews__rating-form form__rating">
+            {StarsList.map((star) => <ReviewStar key={star.count.toString()} count={star.count} title={star.title} changeRateHandler={handleRateChange} isDisabled={submitStatusDisabled}/>)}
+          </div>
+          <textarea
+            className="reviews__textarea form__textarea"
+            id="review" name="review"
+            placeholder={submitErrorStatus === true
+              ? `Submitting review failed`
+              : `Tell how was your stay, what you like and what can be improved`
+            }
+            onChange={handleCommentChange}
+            disabled={submitStatusDisabled}
+          ></textarea>
+          <div className="reviews__button-wrapper">
+            <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-          </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-        </div>
-      </form>
+            </p>
+            <button className="reviews__submit form__submit button" type="submit" disabled={submitButtonDisabled}>Submit</button>
+          </div>
+        </form>}
     </section>
   );
 };
 
-ReviewStar.propTypes = {
-  count: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  handler: PropTypes.func.isRequired
-};
 
 ReviewForm.propTypes = {
-  reviewList: reviewListType
+  reviewList: reviewListType,
+  submitStatusDisabled: PropTypes.bool.isRequired,
+  activeCardId: PropTypes.number.isRequired,
+  createReview: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  setSubmitStatusDisabled: PropTypes.func.isRequired
 };
 
-export default ReviewForm;
+const mapStateToProps = ({submitStatusDisabled, reviews, authorizationStatus}) => ({
+  submitStatusDisabled,
+  reviewList: reviews,
+  authorizationStatus
+});
 
+const mapDispatchToProps = (dispatch) => ({
+  setSubmitStatusDisabled(bool) {
+    dispatch(ActionCreator.setSubmitStatusDisabled(bool));
+  },
+  createReview(cardId, review) {
+    return dispatch(postReview(cardId, review));
+  }
+});
+
+export {ReviewForm};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
