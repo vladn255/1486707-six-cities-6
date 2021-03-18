@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import {placeCardsType, placeCardType} from "../../types.js";
 import {RoutePath, AuthorizationStatus} from "../../const.js";
-import {fetchPlaceCardsNearby, fetchComments, fetchFavoriteCards} from '../../store/api-actions.js';
+import {targetCity} from "../../utils.js";
+import {fetchFavoriteCards, fetchHotelId, fetchPlaceCardsNearby, fetchComments} from '../../store/api-actions.js';
 
 import MainScreen from "../main/main.jsx";
 import FavoritesScreen from "../favorites/favorites.jsx";
@@ -15,8 +16,10 @@ import NotFoundScreen from "../not-found/not-found.jsx";
 import MainEmpty from '../main-empty/main-empty.jsx';
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
+import {ActionCreator} from '../../store/action.js';
 
-const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setReviews, authorizationStatus, getFavoriteCards}) => {
+const App = ({placeCards, isDataLoaded, authorizationStatus, getFavoriteCards, setActiveOffer, activeCard, setCurrentCity, fetchOfferData}) => {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -45,11 +48,23 @@ const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setRevi
           }}>
         </PrivateRoute>
 
-        <Route exact path={RoutePath.OFFER} render={() => {
-          setPlaceCardsNearby(activeCard.id);
-          setReviews(activeCard.id);
-          return <OfferScreen/>;
-        }}>
+        <Route exact
+          path={`${RoutePath.OFFER}/:id?`}
+
+          render={({match}) => {
+            if (!isDataLoaded) {
+              return <LoadingScreen />;
+            }
+
+            if (activeCard.id !== -1) {
+              fetchOfferData(activeCard.id);
+              setCurrentCity(targetCity(activeCard.city.name));
+            } else {
+              setActiveOffer(match.params.id);
+            }
+
+            return <OfferScreen />;
+          }}>
         </Route>
 
         <Route>
@@ -63,11 +78,12 @@ const App = ({placeCards, isDataLoaded, setPlaceCardsNearby, activeCard, setRevi
 App.propTypes = {
   placeCards: placeCardsType,
   isDataLoaded: PropTypes.bool.isRequired,
-  setPlaceCardsNearby: PropTypes.func.isRequired,
   activeCard: placeCardType,
-  setReviews: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  getFavoriteCards: PropTypes.func.isRequired
+  getFavoriteCards: PropTypes.func.isRequired,
+  setActiveOffer: PropTypes.func.isRequired,
+  setCurrentCity: PropTypes.func.isRequired,
+  fetchOfferData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({placeCards, isDataLoaded, activeCard, authorizationStatus}) => ({
@@ -78,14 +94,21 @@ const mapStateToProps = ({placeCards, isDataLoaded, activeCard, authorizationSta
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setPlaceCardsNearby(cardId) {
-    dispatch(fetchPlaceCardsNearby(cardId));
-  },
-  setReviews(cardId) {
-    dispatch(fetchComments(cardId));
-  },
   getFavoriteCards() {
     dispatch(fetchFavoriteCards());
+  },
+
+  setActiveOffer(articleId) {
+    return dispatch(fetchHotelId(articleId));
+  },
+
+  fetchOfferData(articleId) {
+    dispatch(fetchPlaceCardsNearby(articleId));
+    dispatch(fetchComments(articleId));
+  },
+
+  setCurrentCity(city) {
+    dispatch(ActionCreator.setCity(city));
   }
 });
 

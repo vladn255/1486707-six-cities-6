@@ -67,8 +67,7 @@ Map.propTypes = {
   activeCard: placeCardType
 };
 
-const mapStateToProps = ({selectedCity, activeCard}) => ({
-  city: selectedCity,
+const mapStateToProps = ({activeCard}) => ({
   activeCard
 });
 

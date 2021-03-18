@@ -2,8 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {placeCardType, placeCardsType, reviewListType, cityType} from "../../types.js";
-import {getRatingWidth} from "../../utils.js";
+import {placeCardType, placeCardsType, reviewListType} from "../../types.js";
+import {getRatingWidth, targetCity} from "../../utils.js";
 import {RoutePath} from "../../const.js";
 
 import PlacesList from "../places-list/places-list.jsx";
@@ -148,7 +148,8 @@ const Offer = ({activeCard, placeCardsNearby}) => {
           <section className="property__map map">
 
             <Map
-              placeCards = {placeCardsNearby} />
+              placeCards = {placeCardsNearby}
+              city = {targetCity(activeCard.city.name)} />
 
           </section>
         </section>
@@ -170,12 +171,10 @@ const Offer = ({activeCard, placeCardsNearby}) => {
 Offer.propTypes = {
   activeCard: placeCardType,
   placeCardsNearby: placeCardsType,
-  reviewList: reviewListType,
-  selectedCity: cityType
+  reviewList: reviewListType
 };
 
-const mapStateToProps = ({selectedCity, placeCardsNearby, activeCard, reviews}) => ({
-  selectedCity,
+const mapStateToProps = ({placeCardsNearby, activeCard, reviews}) => ({
   placeCardsNearby,
   activeCard,
   reviewList: reviews

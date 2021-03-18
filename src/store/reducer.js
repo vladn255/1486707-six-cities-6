@@ -58,7 +58,7 @@ const initialState = {
   },
 
   reviews: [],
-  submitStatus: false,
+  submitStatusDisabled: false,
   favoriteCards: []
 };
 
@@ -131,16 +131,22 @@ const reducer = (state = initialState, action) => {
         reviews: action.payload
       };
 
-    case ActionType.SET_SUBMIT_STATUS:
+    case ActionType.SET_SUBMIT_STATUS_DISABLED:
       return {
         ...state,
-        submitStatus: action.payload
+        submitStatusDisabled: action.payload
       };
 
     case ActionType.SET_FAVORITE_CARDS:
       return {
         ...state,
         favoriteCards: action.payload
+      };
+
+    case ActionType.SET_CITY:
+      return {
+        ...state,
+        selectedCity: action.payload
       };
 
     default:

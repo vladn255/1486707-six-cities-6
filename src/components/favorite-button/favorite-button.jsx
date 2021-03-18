@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,6 +12,8 @@ const FavoriteButton = ({placeCard, onChangeFavorite, authorizationStatus, butto
 
   const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
 
+  const history = useHistory();
+
   const changeFavorite = () => {
     onChangeFavorite(id, Number(!favoriteStatus));
     setFavoriteStatus(!favoriteStatus);
@@ -19,9 +21,7 @@ const FavoriteButton = ({placeCard, onChangeFavorite, authorizationStatus, butto
 
   const redirectOnNoAuthorization = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      return (
-        <Redirect to={RoutePath.LOGIN} />
-      );
+      history.push(RoutePath.LOGIN);
     }
     return changeFavorite();
   };

@@ -56,7 +56,8 @@ const Main = ({placeCards, selectedCity}) => {
               <section className="cities__map map">
 
                 <Map
-                  placeCards = {placeCards.map((card) => card)} />
+                  placeCards = {placeCards.map((card) => card)}
+                  city={selectedCity}/>
 
               </section>
             </div>

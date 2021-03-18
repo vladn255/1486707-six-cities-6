@@ -29,7 +29,7 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
         : null }
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={RoutePath.OFFER}>
+        <Link to={`${RoutePath.OFFER}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>

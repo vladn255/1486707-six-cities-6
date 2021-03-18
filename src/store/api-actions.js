@@ -63,12 +63,12 @@ const fetchComments = (id) => (dispatch, _getState, api) => (
 const postReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`/comments/${id}`, {comment, rating})
   .then((reviews) => {
-    dispatch(ActionCreator.setSubmitStatus(false));
+    dispatch(ActionCreator.setSubmitStatusDisabled(false));
     const parsedReviews = reviews.data.slice().map((review) => adaptReviewToClient(review));
     dispatch(ActionCreator.loadReviews(parsedReviews));
   })
   .catch(() => {
-    dispatch(ActionCreator.setSubmitStatus(false));
+    dispatch(ActionCreator.setSubmitStatusDisabled(false));
   })
 );
 

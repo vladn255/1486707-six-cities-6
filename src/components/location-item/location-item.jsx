@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action.js';
 import {LocationType} from "../../types.js";
 
-import {CityList} from "../../const.js";
+import {targetCity} from "../../utils.js";
 
 const getActiveCityClass = (cityName, selectedCityName) => {
   return cityName === selectedCityName
@@ -23,10 +23,7 @@ const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
           return;
         }
 
-        const targetCity = CityList.find((city) => {
-          return city[`name`] === evt.target.textContent;
-        });
-        onChangeCity(targetCity);
+        onChangeCity(targetCity(evt.target.textContent));
 
       }}>
       <a className={`locations__item-link tabs__item ${getActiveCityClass(cityName, selectedCity.name)}`} href="#">

@@ -10,7 +10,7 @@ import {reviewListType} from '../../types.js';
 import ReviewList from "../reviews-list/reviews-list.jsx";
 import ReviewStar from "../review-star/review-star.jsx";
 
-const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, authorizationStatus, setSubmitStatus}) => {
+const ReviewForm = ({reviewList, submitStatusDisabled, activeCardId, createReview, authorizationStatus, setSubmitStatusDisabled}) => {
   const [userReview, setReviewForm] = useState({
     comment: ``,
     rating: 0
@@ -18,17 +18,17 @@ const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, autho
 
   const [submitErrorStatus, setSubmitErrorStatus] = useState(false);
 
-  const [submitFormDisabled, setSubmitFormDisabled] = useState(true);
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
   const checkFormFilled = (rate, text) => {
-    return setSubmitFormDisabled(!(rate !== 0
+    return setSubmitButtonDisabled(!(rate !== 0
         && (text.length >= ReviewLength.MIN && text.length < ReviewLength.MAX)));
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    setSubmitStatus(true);
+    setSubmitStatusDisabled(true);
 
     createReview(activeCardId, userReview)
     .then(() => setSubmitErrorStatus(false))
@@ -37,7 +37,7 @@ const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, autho
     evt.currentTarget.reset();
 
     setReviewForm({comment: ``, rating: 0});
-    setSubmitFormDisabled(true);
+    setSubmitStatusDisabled(true);
   };
 
   const handleRateChange = (evt) => {
@@ -65,7 +65,7 @@ const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, autho
         : <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
           <label className="reviews__label form__label" htmlFor="review">Your review</label>
           <div className="reviews__rating-form form__rating">
-            {StarsList.map((star) => <ReviewStar key={star.count.toString()} count={star.count} title={star.title} changeRateHandler={handleRateChange} isDisabled={submitStatus}/>)}
+            {StarsList.map((star) => <ReviewStar key={star.count.toString()} count={star.count} title={star.title} changeRateHandler={handleRateChange} isDisabled={submitStatusDisabled}/>)}
           </div>
           <textarea
             className="reviews__textarea form__textarea"
@@ -75,13 +75,13 @@ const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, autho
               : `Tell how was your stay, what you like and what can be improved`
             }
             onChange={handleCommentChange}
-            disabled={submitStatus}
+            disabled={submitStatusDisabled}
           ></textarea>
           <div className="reviews__button-wrapper">
             <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
             </p>
-            <button className="reviews__submit form__submit button" type="submit" disabled={submitFormDisabled}>Submit</button>
+            <button className="reviews__submit form__submit button" type="submit" disabled={submitButtonDisabled}>Submit</button>
           </div>
         </form>}
     </section>
@@ -91,22 +91,22 @@ const ReviewForm = ({reviewList, submitStatus, activeCardId, createReview, autho
 
 ReviewForm.propTypes = {
   reviewList: reviewListType,
-  submitStatus: PropTypes.bool.isRequired,
+  submitStatusDisabled: PropTypes.bool.isRequired,
   activeCardId: PropTypes.number.isRequired,
   createReview: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  setSubmitStatus: PropTypes.func.isRequired
+  setSubmitStatusDisabled: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({submitStatus, reviews, authorizationStatus}) => ({
-  submitStatus,
+const mapStateToProps = ({submitStatusDisabled, reviews, authorizationStatus}) => ({
+  submitStatusDisabled,
   reviewList: reviews,
   authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSubmitStatus(bool) {
-    dispatch(ActionCreator.setSubmitStatus(bool));
+  setSubmitStatusDisabled(bool) {
+    dispatch(ActionCreator.setSubmitStatusDisabled(bool));
   },
   createReview(cardId, review) {
     return dispatch(postReview(cardId, review));

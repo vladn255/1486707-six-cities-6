@@ -1,4 +1,4 @@
-import {MAX_RATING_PERCENT} from "./const.js";
+import {MAX_RATING_PERCENT, CityList} from "./const.js";
 
 const getRatingWidth = (rating) => Math.floor(rating) / MAX_RATING_PERCENT;
 
@@ -49,6 +49,10 @@ const adaptReviewToClient = (review) => Object.assign(
 
 const sortReviewsByDate = (reviewA, reviewB) => reviewA.date - reviewB.date;
 
+const targetCity = (currentCity) => CityList.find((city) => {
+  return city[`name`] === currentCity;
+});
+
 export {
   getRatingWidth,
   getFilteredPlaceCards,
@@ -58,5 +62,6 @@ export {
   adaptPlaceCardToClient,
   adaptLoginDataToClient,
   adaptReviewToClient,
-  sortReviewsByDate
+  sortReviewsByDate,
+  targetCity
 };

@@ -2,7 +2,7 @@ const RoutePath = {
   MAIN: `/`,
   LOGIN: `/login`,
   FAVORITES: `/favorites`,
-  OFFER: `/offer/:id?`
+  OFFER: `/offer`
 };
 
 const MAX_RATING_PERCENT = 5 / 100;
