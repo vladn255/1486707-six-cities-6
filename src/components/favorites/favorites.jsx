@@ -1,15 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {placeCardsType} from "../../types.js";
 import {RoutePath} from "../../const.js";
+import {fetchFavoriteCards} from '../../store/api-actions.js';
 
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 import FavoritesEmpty from "../favorites-empty/favorites-empty.jsx";
 import FavoriteList from "../favorite-list/favorite-list.jsx";
+import {getFavoriteCards} from '../../store/user-data/selectors.js';
 
-const Favorites = ({favoriteCards}) => {
+const Favorites = ({favoriteCards, loadFavoriteCards}) => {
+  loadFavoriteCards();
+
   if (favoriteCards.length === 0) {
     return <FavoritesEmpty />;
   }
@@ -51,13 +56,20 @@ const Favorites = ({favoriteCards}) => {
 };
 
 Favorites.propTypes = {
-  favoriteCards: placeCardsType
+  favoriteCards: placeCardsType,
+  loadFavoriteCards: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({favoriteCards}) => ({
-  favoriteCards
+const mapStateToProps = (state) => ({
+  favoriteCards: getFavoriteCards(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFavoriteCards() {
+    dispatch(fetchFavoriteCards());
+  }
 });
 
 
 export {Favorites};
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {AuthorizationStatus, RoutePath} from "../../const.js";
+import {getAuthorizationStatus, getCurrentUser} from '../../store/user-data/selectors.js';
 
 
 const HeaderUserInfo = ({authorizationStatus, currentUser: {avatarUrl, email}}) => {
@@ -38,9 +39,9 @@ HeaderUserInfo.propTypes = {
   })
 };
 
-const mapStateToProps = ({authorizationStatus, currentUser}) => ({
-  authorizationStatus,
-  currentUser
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  currentUser: getCurrentUser(state)
 });
 
 export {HeaderUserInfo};

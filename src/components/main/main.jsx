@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {placeCardsType, cityType} from "../../types.js";
+import {getSelectedCity, getSortedPlaceCards} from "../../store/cards-data/selectors.js";
 
 import PlacesList from "../places-list/places-list.jsx";
 import LocationList from "../location-list/location-list.jsx";
@@ -73,9 +74,9 @@ Main.propTypes = {
   selectedCity: cityType,
 };
 
-const mapStateToProps = ({placeCards, selectedCity}) => ({
-  placeCards,
-  selectedCity
+const mapStateToProps = (state) => ({
+  placeCards: getSortedPlaceCards(state),
+  selectedCity: getSelectedCity(state)
 });
 
 export {Main};

@@ -7,32 +7,29 @@ import thunk from "redux-thunk";
 
 import App from './components/app/app';
 
-import {reviews} from "./mocks/reviews.js";
-
-import {reducer} from './store/reducer.js';
+import rootReducer from './store/root-reducer.js';
 import {ActionCreator} from './store/action.js';
 import {createAPI} from './services/api.js';
 import {AuthorizationStatus} from './const';
-import {checkAuth, fetchPlaceCards, logout} from './store/api-actions';
+import {checkAuth, fetchPlaceCards} from './store/api-actions';
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
 const store = createStore(
-    reducer,
+    rootReducer,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api))
     )
 );
-store.dispatch(logout());
+// store.dispatch(logout());
 store.dispatch(checkAuth());
 store.dispatch(fetchPlaceCards());
 
 ReactDOM.render(
     <Provider store={store}>
       <App
-        reviewList={reviews}
       />
     </Provider>,
     document.querySelector(`#root`)

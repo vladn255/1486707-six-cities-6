@@ -1,10 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {placeCardType, placeCardsType, reviewListType} from "../../types.js";
-import {getRatingWidth, targetCity} from "../../utils.js";
+import {getRatingWidth, getTargetCity} from "../../utils.js";
 import {RoutePath} from "../../const.js";
+import {ActionCreator} from '../../store/action.js';
+import {fetchHotelId, fetchPlaceCardsNearby, fetchComments} from '../../store/api-actions.js';
 
 import PlacesList from "../places-list/places-list.jsx";
 import ReviewForm from '../review-form/review-form.jsx';
@@ -12,15 +15,22 @@ import Map from "../map/map.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 import NotFound from "../not-found/not-found.jsx";
 import FavoriteButton from "../favorite-button/favorite-button.jsx";
+import {getPlaceCardsNearby, getReviews} from '../../store/offer-data/selectors.js';
+import {getActiveCard} from '../../store/cards-data/selectors.js';
 
-const FAVORITE_BUTTON = {
-  width: 31,
-  height: 33
+const FavoriteButtonSize = {
+  WIDTH: 31,
+  HEIGHT: 33
 };
 
-const Offer = ({activeCard, placeCardsNearby}) => {
+const Offer = ({activeCard, placeCardsNearby, fetchOfferData, setCurrentCity, setActiveOffer}) => {
 
-  if (activeCard.id === -1) {
+  if (activeCard.id !== -1) {
+    fetchOfferData(activeCard.id);
+    setCurrentCity(getTargetCity(activeCard.city.name));
+  } else {
+    const {id} = useParams();
+    setActiveOffer(id);
     return (
       <NotFound />
     );
@@ -75,8 +85,8 @@ const Offer = ({activeCard, placeCardsNearby}) => {
 
                 <FavoriteButton
                   placeCard={activeCard}
-                  buttonWidth={FAVORITE_BUTTON.width}
-                  buttonHeight={FAVORITE_BUTTON.height}
+                  buttonWidth={FavoriteButtonSize.WIDTH}
+                  buttonHeight={FavoriteButtonSize.HEIGHT}
                 />
 
               </div>
@@ -149,7 +159,7 @@ const Offer = ({activeCard, placeCardsNearby}) => {
 
             <Map
               placeCards = {placeCardsNearby}
-              city = {targetCity(activeCard.city.name)} />
+              city = {getTargetCity(activeCard.city.name)} />
 
           </section>
         </section>
@@ -171,14 +181,32 @@ const Offer = ({activeCard, placeCardsNearby}) => {
 Offer.propTypes = {
   activeCard: placeCardType,
   placeCardsNearby: placeCardsType,
-  reviewList: reviewListType
+  reviewList: reviewListType,
+  fetchOfferData: PropTypes.func.isRequired,
+  setCurrentCity: PropTypes.func.isRequired,
+  setActiveOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({placeCardsNearby, activeCard, reviews}) => ({
-  placeCardsNearby,
-  activeCard,
-  reviewList: reviews
+const mapStateToProps = (state) => ({
+  placeCardsNearby: getPlaceCardsNearby(state),
+  activeCard: getActiveCard(state),
+  reviewList: getReviews(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setActiveOffer(articleId) {
+    return dispatch(fetchHotelId(articleId));
+  },
+
+  fetchOfferData(articleId) {
+    dispatch(fetchPlaceCardsNearby(articleId));
+    dispatch(fetchComments(articleId));
+  },
+
+  setCurrentCity(city) {
+    dispatch(ActionCreator.setCity(city));
+  }
 });
 
 export {Offer};
-export default connect(mapStateToProps)(Offer);
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);

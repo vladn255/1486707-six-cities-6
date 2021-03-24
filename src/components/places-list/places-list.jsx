@@ -9,7 +9,7 @@ import PlaceCard from "../place-card/place-card.jsx";
 
 const PlacesList = ({placeCards, setActivePlaceCard, isMapChanging}) => {
   const mouseOverHandler = (articleId) => {
-    if (isMapChanging === true) {
+    if (isMapChanging) {
       setActivePlaceCard(articleId);
     }
   };
@@ -27,10 +27,6 @@ PlacesList.propTypes = {
   isMapChanging: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({activeCardId}) => ({
-  activeCardId
-});
-
 const mapDispatchToProps = (dispatch) => ({
   setActivePlaceCard(articleId) {
     dispatch(fetchHotelId(articleId));
@@ -38,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {PlacesList};
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesList);
+export default connect(null, mapDispatchToProps)(PlacesList);

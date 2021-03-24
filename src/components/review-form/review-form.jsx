@@ -9,6 +9,8 @@ import {reviewListType} from '../../types.js';
 
 import ReviewList from "../reviews-list/reviews-list.jsx";
 import ReviewStar from "../review-star/review-star.jsx";
+import {getReviews, getSubmitStatusDisabled} from '../../store/offer-data/selectors.js';
+import {getAuthorizationStatus} from '../../store/user-data/selectors.js';
 
 const ReviewForm = ({reviewList, submitStatusDisabled, activeCardId, createReview, authorizationStatus, setSubmitStatusDisabled}) => {
   const [userReview, setReviewForm] = useState({
@@ -98,10 +100,10 @@ ReviewForm.propTypes = {
   setSubmitStatusDisabled: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({submitStatusDisabled, reviews, authorizationStatus}) => ({
-  submitStatusDisabled,
-  reviewList: reviews,
-  authorizationStatus
+const mapStateToProps = (state) => ({
+  submitStatusDisabled: getSubmitStatusDisabled(state),
+  reviewList: getReviews(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
