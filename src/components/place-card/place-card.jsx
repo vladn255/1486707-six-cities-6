@@ -19,7 +19,7 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
   return (
     <article className="cities__place-card place-card"
       onMouseOver={() => {
-        mouseOverHandler(id);
+        mouseOverHandler(placeCard);
       }}>
 
       {isPremium

@@ -12,8 +12,6 @@ const getSelectedCity = (state) => state[NameSpace.CARDS].selectedCity;
 
 const getInitialPlaceCards = (state) => state[NameSpace.CARDS].initialPlaceCards;
 
-const getIsDataLoaded = (state) => state[NameSpace.CARDS].isDataLoaded;
-
 const getActiveCard = (state) => state[NameSpace.CARDS].activeCard;
 
 const getInitialSortItem = (state) => state[NameSpace.CARDS].initialSortItem;
@@ -42,7 +40,6 @@ export {
   getCurrentSortItem,
   getSelectedCity,
   getInitialPlaceCards,
-  getIsDataLoaded,
   getActiveCard,
   getInitialSortItem,
   getSortedPlaceCards

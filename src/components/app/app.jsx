@@ -1,9 +1,8 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 
-import {placeCardsType, placeCardType} from "../../types.js";
+import {placeCardsType} from "../../types.js";
 import {RoutePath} from "../../const.js";
 
 import MainScreen from "../main/main.jsx";
@@ -11,23 +10,20 @@ import FavoritesScreen from "../favorites/favorites.jsx";
 import LoginScreen from "../login/login.jsx";
 import OfferScreen from "../offer/offer.jsx";
 import NotFoundScreen from "../not-found/not-found.jsx";
-import MainEmpty from '../main-empty/main-empty.jsx';
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
-import {getActiveCard, getIsDataLoaded, getPlaceCards} from '../../store/cards-data/selectors.js';
+import {getInitialPlaceCards} from '../../store/cards-data/selectors.js';
 
-const App = ({placeCards, isDataLoaded}) => {
+const App = ({initialPlaceCards}) => {
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={RoutePath.MAIN} render={() => {
-          if (!isDataLoaded) {
+          if (initialPlaceCards.length === 0) {
             return <LoadingScreen />;
           }
-          return placeCards.length !== 0
-            ? <MainScreen />
-            : <MainEmpty />;
+          return <MainScreen />;
         }}>
         </Route>
 
@@ -47,7 +43,7 @@ const App = ({placeCards, isDataLoaded}) => {
           path={`${RoutePath.OFFER}/:id`}
 
           render={() => {
-            if (!isDataLoaded) {
+            if (initialPlaceCards.length === 0) {
               return <LoadingScreen />;
             }
 
@@ -64,15 +60,11 @@ const App = ({placeCards, isDataLoaded}) => {
 };
 
 App.propTypes = {
-  placeCards: placeCardsType,
-  isDataLoaded: PropTypes.bool.isRequired,
-  activeCard: placeCardType
+  initialPlaceCards: placeCardsType
 };
 
 const mapStateToProps = (state) => ({
-  placeCards: getPlaceCards(state),
-  isDataLoaded: getIsDataLoaded(state),
-  activeCard: getActiveCard(state)
+  initialPlaceCards: getInitialPlaceCards(state)
 });
 
 

@@ -6,7 +6,6 @@ const initialState = {
   selectedCity: CityList[0],
   initialPlaceCards: [],
   placeCards: [],
-  isDataLoaded: false,
 
   activeCard: {
     bedrooms: 0,
@@ -80,14 +79,30 @@ const cardsData = (state = initialState, action) => {
       return {
         ...state,
         initialPlaceCards: action.payload.initialPlaceCards,
-        placeCards: action.payload.placeCards,
-        isDataLoaded: true
+        placeCards: action.payload.placeCards
       };
 
     case ActionType.SET_CITY:
       return {
         ...state,
         selectedCity: action.payload
+      };
+
+    case ActionType.CHANGE_FAVORITE_CARD:
+      const newCard = action.payload;
+      const index = state.initialPlaceCards.findIndex((card) => card.id === newCard.id);
+
+      const updatedInitialPlaceCards = [
+        ...state.initialPlaceCards.slice(0, index),
+        newCard,
+        ...state.initialPlaceCards.slice(index + 1)
+      ];
+
+      const updatedPlaceCards = getFilteredPlaceCards(updatedInitialPlaceCards, state.selectedCity);
+      return {
+        ...state,
+        initialPlaceCards: updatedInitialPlaceCards,
+        placeCards: updatedPlaceCards
       };
   }
   return state;

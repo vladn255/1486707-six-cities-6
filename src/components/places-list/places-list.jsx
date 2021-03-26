@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {placeCardsType} from "../../types.js";
-import {fetchHotelId} from '../../store/api-actions.js';
+import {ActionCreator} from '../../store/action.js';
 
 import PlaceCard from "../place-card/place-card.jsx";
 
@@ -13,7 +13,6 @@ const PlacesList = ({placeCards, setActivePlaceCard, isMapChanging}) => {
       setActivePlaceCard(articleId);
     }
   };
-
   return (
     <>
       {placeCards.map((placeCard) => <PlaceCard key={placeCard.id.toString()} placeCard={placeCard} mouseOverHandler={mouseOverHandler}/>)}
@@ -29,7 +28,7 @@ PlacesList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   setActivePlaceCard(articleId) {
-    dispatch(fetchHotelId(articleId));
+    dispatch(ActionCreator.setActiveCard(articleId));
   }
 });
 
