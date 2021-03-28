@@ -50,6 +50,9 @@ const fetchHotelId = (id) => (dispatch, _getState, api) => (
   .then((card) => {
     dispatch(ActionCreator.setActiveCard(adaptPlaceCardToClient(card.data)));
   })
+  .catch(() => {
+    dispatch(ActionCreator.setActiveCard(null));
+  })
 );
 
 const fetchComments = (id) => (dispatch, _getState, api) => (

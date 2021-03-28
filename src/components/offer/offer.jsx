@@ -1,34 +1,44 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {placeCardType} from "../../types.js";
-import {getTargetCity} from "../../utils.js";
+import {placeCardType, cityType} from "../../types.js";
 import {RoutePath} from "../../const.js";
 import {ActionCreator} from '../../store/action.js';
 import {fetchHotelId, fetchPlaceCardsNearby, fetchComments} from '../../store/api-actions.js';
+import {getActiveCard, getSelectedCity} from '../../store/cards-data/selectors.js';
 
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 import NotFound from "../not-found/not-found.jsx";
 import OfferInfo from "../offer-info/offer-info.jsx";
-import {getActiveCard} from '../../store/cards-data/selectors.js';
+import LoadingScreen from "../loading-screen/loading-screen.jsx";
 
 
-const Offer = ({activeCard, fetchOfferData, setCurrentCity, setActiveOffer}) => {
+const Offer = ({activeCard, fetchOfferData, setCurrentCity, setActiveOffer, selectedCity}) => {
 
   const {id} = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (activeCard.id === parseInt(id, 10)) {
-    fetchOfferData(activeCard.id);
-    setCurrentCity(getTargetCity(activeCard.city.name));
+  useEffect(() => {
+    if (activeCard.id !== Number(id)) {
+      setIsLoading(true);
+    }
+    Promise.all([setActiveOffer(id), fetchOfferData(id)])
+    .finally(() => {
+      setCurrentCity(selectedCity);
+      setIsLoading(false);
+    });
+  }, [id, selectedCity]);
 
-  } else if (activeCard.id === undefined) {
-    return <NotFound />;
-
-  } else {
-    setActiveOffer(id);
+  if (isLoading) {
+    return <LoadingScreen />;
   }
+
+  if (activeCard === null) {
+    return <NotFound />;
+  }
+
 
   return (
     <div className="page">
@@ -60,11 +70,13 @@ Offer.propTypes = {
   activeCard: placeCardType,
   fetchOfferData: PropTypes.func.isRequired,
   setCurrentCity: PropTypes.func.isRequired,
-  setActiveOffer: PropTypes.func.isRequired
+  setActiveOffer: PropTypes.func.isRequired,
+  selectedCity: cityType
 };
 
 const mapStateToProps = (state) => ({
-  activeCard: getActiveCard(state)
+  activeCard: getActiveCard(state),
+  selectedCity: getSelectedCity(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
