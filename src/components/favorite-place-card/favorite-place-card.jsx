@@ -7,13 +7,13 @@ import {RoutePath} from '../../const.js';
 
 import FavoriteButton from "../favorite-button/favorite-button.jsx";
 
-const FAVORITE_BUTTON = {
-  width: 18,
-  height: 19
+const FavoriteButtonSize = {
+  WIDTH: 18,
+  HEIGHT: 19
 };
 
 const FavoritePlaceCard = ({placeCard}) => {
-  const {previewImage, price, rating, title, type} = (placeCard);
+  const {previewImage, price, rating, title, type, id, isFavorite} = placeCard;
 
   return (
     <article className="favorites__card place-card">
@@ -30,9 +30,10 @@ const FavoritePlaceCard = ({placeCard}) => {
           </div>
 
           <FavoriteButton
-            placeCard={placeCard}
-            buttonWidth={FAVORITE_BUTTON.width}
-            buttonHeight={FAVORITE_BUTTON.height}
+            id={id}
+            isFavorite={isFavorite}
+            buttonWidth={FavoriteButtonSize.WIDTH}
+            buttonHeight={FavoriteButtonSize.HEIGHT}
           />
 
         </div>

@@ -2,15 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {placeCardsType, cityType} from "../../types.js";
+import {getSelectedCity, getSortedPlaceCards} from "../../store/cards-data/selectors.js";
 
-import PlacesList from "../places-list/places-list.jsx";
 import LocationList from "../location-list/location-list.jsx";
-import Map from "../map/map.jsx";
-import SortMenu from "../sort-menu-items/sort-menu-items.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
+import MainEmpty from '../main-empty/main-empty.jsx';
+import MainPlacesContainer from "../main-places-container/main-places-container.jsx";
 
 
-const Main = ({placeCards, selectedCity}) => {
+const Main = ({placeCards}) => {
+
+  if (placeCards.length === 0) {
+    return <MainEmpty />;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -40,27 +44,9 @@ const Main = ({placeCards, selectedCity}) => {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placeCards.length} places to stay in {selectedCity.name}</b>
 
-              <SortMenu />
+            <MainPlacesContainer />
 
-              <div className="cities__places-list places__list tabs__content">
-
-                <PlacesList placeCards = {placeCards} isMapChanging={true}/>
-
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-
-                <Map
-                  placeCards = {placeCards.map((card) => card)}
-                  city={selectedCity}/>
-
-              </section>
-            </div>
           </div>
         </div>
       </main>
@@ -73,9 +59,9 @@ Main.propTypes = {
   selectedCity: cityType,
 };
 
-const mapStateToProps = ({placeCards, selectedCity}) => ({
-  placeCards,
-  selectedCity
+const mapStateToProps = (state) => ({
+  placeCards: getSortedPlaceCards(state),
+  selectedCity: getSelectedCity(state)
 });
 
 export {Main};

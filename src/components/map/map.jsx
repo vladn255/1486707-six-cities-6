@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import {connect} from 'react-redux';
 
 import {cityType, placeCardType, placeCardsType} from "../../types.js";
+import {getActiveCard} from '../../store/cards-data/selectors.js';
 
 const ZOOM = 13;
 
@@ -67,8 +68,8 @@ Map.propTypes = {
   activeCard: placeCardType
 };
 
-const mapStateToProps = ({activeCard}) => ({
-  activeCard
+const mapStateToProps = (state) => ({
+  activeCard: getActiveCard(state)
 });
 
 export {Map};

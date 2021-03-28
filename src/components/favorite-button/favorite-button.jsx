@@ -3,12 +3,11 @@ import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {placeCardType} from "../../types.js";
 import {changeFavoriteStatus} from "../../store/api-actions.js";
 import {RoutePath, AuthorizationStatus} from '../../const.js';
+import {getAuthorizationStatus} from '../../store/user-data/selectors.js';
 
-const FavoriteButton = ({placeCard, onChangeFavorite, authorizationStatus, buttonWidth, buttonHeight}) => {
-  const {id, isFavorite} = (placeCard);
+const FavoriteButton = ({id, isFavorite, onChangeFavorite, authorizationStatus, buttonWidth, buttonHeight}) => {
 
   const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
 
@@ -19,24 +18,21 @@ const FavoriteButton = ({placeCard, onChangeFavorite, authorizationStatus, butto
     setFavoriteStatus(!favoriteStatus);
   };
 
-  const redirectOnNoAuthorization = () => {
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      history.push(RoutePath.LOGIN);
-    }
-    return changeFavorite();
-  };
-
   const favoriteButtonClickHandler = (evt) => {
     evt.preventDefault();
 
-    redirectOnNoAuthorization();
+    return authorizationStatus === AuthorizationStatus.NO_AUTH
+      ? history.push(RoutePath.LOGIN)
+      : changeFavorite();
+
   };
 
   return (
-    <button className= {favoriteStatus
-      ? `place-card__bookmark-button place-card__bookmark-button--active button`
-      : `place-card__bookmark-button button`
-    }
+    <button className= {`place-card__bookmark-button button
+      ${favoriteStatus
+      ? `place-card__bookmark-button--active`
+      : ``}
+    `}
     type="button"
     onClick={favoriteButtonClickHandler}>
       <svg className="place-card__bookmark-icon" width={buttonWidth} height={buttonHeight}>
@@ -48,15 +44,16 @@ const FavoriteButton = ({placeCard, onChangeFavorite, authorizationStatus, butto
 };
 
 FavoriteButton.propTypes = {
-  placeCard: placeCardType,
+  id: PropTypes.number.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   onChangeFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   buttonWidth: PropTypes.number.isRequired,
   buttonHeight: PropTypes.number.isRequired
 };
 
-const mapStateToProps = ({authorizationStatus}) => ({
-  authorizationStatus
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

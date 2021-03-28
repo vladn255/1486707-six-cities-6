@@ -50,6 +50,9 @@ const fetchHotelId = (id) => (dispatch, _getState, api) => (
   .then((card) => {
     dispatch(ActionCreator.setActiveCard(adaptPlaceCardToClient(card.data)));
   })
+  .catch(() => {
+    dispatch(ActionCreator.setActiveCard(null));
+  })
 );
 
 const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -84,7 +87,7 @@ const logout = () => (dispatch, _getState, api) => (
 const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${id}/${status}`, {id, status})
   .then(({data}) => {
-    dispatch(ActionCreator.setActiveCard(adaptPlaceCardToClient(data)));
+    dispatch(ActionCreator.changeFavoriteCard(adaptPlaceCardToClient(data)));
   })
 );
 

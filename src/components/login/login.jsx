@@ -1,13 +1,20 @@
 import React, {useRef} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {checkAuth, login} from "../../store/api-actions.js";
-import {RoutePath} from '../../const.js';
+import {RoutePath, AuthorizationStatus} from '../../const.js';
+import {getAuthorizationStatus} from '../../store/user-data/selectors.js';
 
 
-const Login = ({onSubmit}) => {
+const Login = ({onSubmit, authorizationStatus}) => {
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return (
+      <Redirect to={RoutePath.MAIN} />
+    );
+  }
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -82,8 +89,13 @@ const Login = ({onSubmit}) => {
 };
 
 Login.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
@@ -95,4 +107,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {Login};
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

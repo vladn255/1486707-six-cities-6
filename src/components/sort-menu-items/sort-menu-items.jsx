@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 
 import {ActionCreator} from '../../store/action.js';
 
-import {placeCardsType} from "../../types.js";
-import {sortByPriceDown, sortByPriceUp, sortByRate} from "../../utils.js";
 import {SortItems} from "../../const.js";
+import {getCurrentSortItem} from '../../store/cards-data/selectors.js';
 
-const SortMenuItems = ({unSortedPlaceCards, onChangePlaceCards, currentSortItem, onSetSortItem}) => {
+const SortMenuItems = ({currentSortItem, onSetSortItem}) => {
   const [isToggleOn, setToggle] = useState(false);
 
   const handleSortMenuOpenClick = () => {
@@ -25,22 +24,18 @@ const SortMenuItems = ({unSortedPlaceCards, onChangePlaceCards, currentSortItem,
     switch (evt.target.dataset.sortItem) {
       case SortItems.POPULAR:
         onSetSortItem(SortItems.POPULAR);
-        onChangePlaceCards(unSortedPlaceCards);
         break;
 
       case SortItems.PRICE_LOW_TO_HIGH:
         onSetSortItem(SortItems.PRICE_LOW_TO_HIGH);
-        onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByPriceDown));
         break;
 
       case SortItems.PRICE_HIGH_TO_LOW:
         onSetSortItem(SortItems.PRICE_HIGH_TO_LOW);
-        onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByPriceUp));
         break;
 
       case SortItems.TOP_RATED_FIRST:
         onSetSortItem(SortItems.TOP_RATED_FIRST);
-        onChangePlaceCards(unSortedPlaceCards.slice().sort(sortByRate));
         break;
     }
   };
@@ -72,24 +67,15 @@ const SortMenuItems = ({unSortedPlaceCards, onChangePlaceCards, currentSortItem,
 };
 
 SortMenuItems.propTypes = {
-  placeCards: placeCardsType,
-  unSortedPlaceCards: placeCardsType,
-  onChangePlaceCards: PropTypes.func.isRequired,
   onSetSortItem: PropTypes.func.isRequired,
   currentSortItem: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({placeCards, unSortedPlaceCards, currentSortItem, initialSortItem}) => ({
-  placeCards,
-  unSortedPlaceCards,
-  currentSortItem,
-  initialSortItem
+const mapStateToProps = (state) => ({
+  currentSortItem: getCurrentSortItem(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangePlaceCards(cards) {
-    dispatch(ActionCreator.setPlaceCards(cards));
-  },
   onSetSortItem(sortItem) {
     dispatch(ActionCreator.setSortItem(sortItem));
   }
