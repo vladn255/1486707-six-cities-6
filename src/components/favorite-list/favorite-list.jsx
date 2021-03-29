@@ -10,9 +10,7 @@ const FavoritesList = ({favoritePlaceCards}) => {
   return (
     <ul className="favorites__list">
 
-      <>
-        {CityList.slice().map((city) => <FavoriteItem key={city.id.toString()} city={city} placeCards={favoritePlaceCards}/>)}
-      </>
+      {CityList.slice().map((city) => <FavoriteItem key={city.id.toString()} city={city} placeCards={favoritePlaceCards}/>)}
 
     </ul>
   );

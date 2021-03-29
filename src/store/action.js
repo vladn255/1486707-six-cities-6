@@ -11,7 +11,8 @@ const ActionType = {
   LOAD_REVIEWS: `data/loadReviews`,
   SET_SUBMIT_STATUS_DISABLED: `offerForm/setSubmitStatusDisabled`,
   SET_FAVORITE_CARDS: `data/setFavoriteCards`,
-  SET_CITY: `offerForm/setCity`
+  SET_CITY: `offerForm/setCity`,
+  CHANGE_FAVORITE_CARD: `data/changeFavoriteCard`
 };
 
 const ActionCreator = {
@@ -73,6 +74,11 @@ const ActionCreator = {
   setCity: (city) => ({
     type: ActionType.SET_CITY,
     payload: city
+  }),
+
+  changeFavoriteCard: (card) => ({
+    type: ActionType.CHANGE_FAVORITE_CARD,
+    payload: card
   })
 };
 

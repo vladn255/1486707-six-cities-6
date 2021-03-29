@@ -2,9 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../store/action.js';
+import {getSelectedCity} from '../../store/cards-data/selectors.js';
 import {LocationType} from "../../types.js";
 
-import {targetCity} from "../../utils.js";
+import {getTargetCity} from "../../utils.js";
 
 const getActiveCityClass = (cityName, selectedCityName) => {
   return cityName === selectedCityName
@@ -23,7 +24,7 @@ const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
           return;
         }
 
-        onChangeCity(targetCity(evt.target.textContent));
+        onChangeCity(getTargetCity(evt.target.textContent));
 
       }}>
       <a className={`locations__item-link tabs__item ${getActiveCityClass(cityName, selectedCity.name)}`} href="#">
@@ -35,8 +36,8 @@ const LocationItem = ({cityName, selectedCity, onChangeCity}) => {
 
 LocationItem.propTypes = LocationType;
 
-const mapStateToProps = ({selectedCity}) => ({
-  selectedCity
+const mapStateToProps = (state) => ({
+  selectedCity: getSelectedCity(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

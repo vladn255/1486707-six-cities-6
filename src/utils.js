@@ -49,7 +49,7 @@ const adaptReviewToClient = (review) => Object.assign(
 
 const sortReviewsByDate = (reviewA, reviewB) => reviewA.date - reviewB.date;
 
-const targetCity = (currentCity) => CityList.find((city) => {
+const getTargetCity = (currentCity) => CityList.find((city) => {
   return city[`name`] === currentCity;
 });
 
@@ -63,5 +63,5 @@ export {
   adaptLoginDataToClient,
   adaptReviewToClient,
   sortReviewsByDate,
-  targetCity
+  getTargetCity
 };
