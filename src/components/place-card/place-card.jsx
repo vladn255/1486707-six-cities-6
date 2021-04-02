@@ -8,9 +8,10 @@ import {RoutePath} from '../../const.js';
 
 import FavoriteButton from "../favorite-button/favorite-button.jsx";
 
-const FavoriteButtonSize = {
+const FavoriteButtonParams = {
   WIDTH: 18,
-  HEIGHT: 19
+  HEIGHT: 19,
+  CLASS: `place-card`
 };
 
 const PlaceCard = ({placeCard, mouseOverHandler}) => {
@@ -43,8 +44,9 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
             <FavoriteButton
               id={id}
               isFavorite={isFavorite}
-              buttonWidth={FavoriteButtonSize.WIDTH}
-              buttonHeight={FavoriteButtonSize.HEIGHT}
+              buttonWidth={FavoriteButtonParams.WIDTH}
+              buttonHeight={FavoriteButtonParams.HEIGHT}
+              buttonClass={FavoriteButtonParams.CLASS}
             />
 
           </div>

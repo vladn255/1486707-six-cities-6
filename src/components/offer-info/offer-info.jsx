@@ -11,9 +11,10 @@ import FavoriteButton from "../favorite-button/favorite-button.jsx";
 import {getPlaceCardsNearby, getReviews} from '../../store/offer-data/selectors.js';
 import {getActiveCard, getSelectedCity} from '../../store/cards-data/selectors.js';
 
-const FavoriteButtonSize = {
+const FavoriteButtonParams = {
   WIDTH: 31,
-  HEIGHT: 33
+  HEIGHT: 33,
+  CLASS: `property`
 };
 
 const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
@@ -39,7 +40,7 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
           <div className="property__wrapper">
 
             {isPremium
-              ? <div className="place-card__mark">
+              ? <div className="property__mark">
                 <span>Premium</span>
               </div>
               : null }
@@ -52,8 +53,9 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
               <FavoriteButton
                 id={activeCard.id}
                 isFavorite={activeCard.isFavorite}
-                buttonWidth={FavoriteButtonSize.WIDTH}
-                buttonHeight={FavoriteButtonSize.HEIGHT}
+                buttonWidth={FavoriteButtonParams.WIDTH}
+                buttonHeight={FavoriteButtonParams.HEIGHT}
+                buttonClass={FavoriteButtonParams.CLASS}
               />
 
             </div>

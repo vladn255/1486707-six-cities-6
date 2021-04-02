@@ -23,7 +23,7 @@ const store = createStore(
         applyMiddleware(thunk.withExtraArgument(api))
     )
 );
-// store.dispatch(logout());
+
 store.dispatch(checkAuth());
 store.dispatch(fetchPlaceCards());
 
