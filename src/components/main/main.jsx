@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {placeCardsType, cityType} from "../../types.js";
-import {getSelectedCity, getSortedPlaceCards} from "../../store/cards-data/selectors.js";
+import {getSelectedCity, getPlaceCards} from "../../store/cards-data/selectors.js";
 
 import LocationList from "../location-list/location-list.jsx";
 import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
@@ -60,7 +60,7 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  placeCards: getSortedPlaceCards(state),
+  placeCards: getPlaceCards(state),
   selectedCity: getSelectedCity(state)
 });
 
