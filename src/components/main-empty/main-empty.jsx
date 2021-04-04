@@ -1,6 +1,7 @@
 import React from 'react';
 
 import LocationList from "../location-list/location-list.jsx";
+import HeaderUserInfo from "../header-user-info/header-user-info.jsx";
 
 const MainEmpty = () => {
   return (
@@ -14,15 +15,7 @@ const MainEmpty = () => {
               </a>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
+              <HeaderUserInfo />
             </nav>
           </div>
         </div>

@@ -12,7 +12,8 @@ const initialState = {
     name: ``
   },
 
-  favoriteCards: []
+  favoriteCards: [],
+  serverErrorStatus: false
 };
 
 const userData = (state = initialState, action) => {
@@ -40,6 +41,12 @@ const userData = (state = initialState, action) => {
       return {
         ...state,
         favoriteCards: action.payload
+      };
+
+    case ActionType.SET_SERVER_ERROR_STATUS:
+      return {
+        ...state,
+        serverErrorStatus: action.payload
       };
 
   }

@@ -21,13 +21,32 @@ const Login = ({onSubmit, authorizationStatus}) => {
 
   const history = useHistory();
 
+  const validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const onLoginError = () => {
+    loginRef.current.value = `login error`;
+    passwordRef.current.value = ``;
+  };
+
+  const onLoginSuccess = () => {
+    history.push(RoutePath.MAIN);
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    history.push(RoutePath.MAIN);
+
+    if (!validateEmail(loginRef.current.value)) {
+      loginRef.current.value = `invalid email`;
+      return;
+    }
+
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value
-    });
+    }, onLoginSuccess, onLoginError);
   };
 
   return (
@@ -98,11 +117,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData))
+  onSubmit(authData, onSuccess, onError) {
+    return dispatch(login(authData))
     .then(() => {
       dispatch(checkAuth());
-    });
+      onSuccess();
+    })
+    .catch(() => onError());
   }
 });
 

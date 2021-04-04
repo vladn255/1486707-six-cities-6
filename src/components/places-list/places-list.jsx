@@ -16,7 +16,7 @@ const PlacesList = ({activeCard, placeCards, setActivePlaceCard, isMapChanging})
   };
   return (
     <>
-      {placeCards.map((placeCard) => <PlaceCard key={placeCard.id.toString()} placeCard={placeCard} mouseOverHandler={mouseOverHandler}/>)}
+      {placeCards.map((placeCard) => <PlaceCard key={placeCard.id.toString()} placeCard={placeCard} onMouseOver={mouseOverHandler}/>)}
     </>
   );
 };

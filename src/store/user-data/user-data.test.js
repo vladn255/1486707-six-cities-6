@@ -57,7 +57,8 @@ describe(`User data reducers work correctly`, () => {
       isPro: false,
       name: ``
     },
-    favoriteCards: []
+    favoriteCards: [],
+    serverErrorStatus: false
   };
 
   it(`Reducer without additional parameters should return initial state`, () => {
