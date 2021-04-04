@@ -4,10 +4,10 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {AuthorizationStatus, RoutePath} from "../../const.js";
-import {getAuthorizationStatus, getCurrentUser} from '../../store/user-data/selectors.js';
+import {getAuthorizationStatus, getCurrentUser, getServerErrorStatus} from '../../store/user-data/selectors.js';
 
 
-const HeaderUserInfo = ({authorizationStatus, currentUser: {avatarUrl, email}}) => {
+const HeaderUserInfo = ({authorizationStatus, currentUser: {avatarUrl, email}, serverErrorStatus}) => {
 
   return (
     <ul className="header__nav-list">
@@ -27,6 +27,11 @@ const HeaderUserInfo = ({authorizationStatus, currentUser: {avatarUrl, email}}) 
           </span>
         </Link>
       </li>
+      <span >
+        {serverErrorStatus
+          ? `...server connection error`
+          : ``}
+      </span>
     </ul>
   );
 };
@@ -36,12 +41,14 @@ HeaderUserInfo.propTypes = {
   currentUser: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired
-  })
+  }),
+  serverErrorStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  currentUser: getCurrentUser(state)
+  currentUser: getCurrentUser(state),
+  serverErrorStatus: getServerErrorStatus(state)
 });
 
 export {HeaderUserInfo};

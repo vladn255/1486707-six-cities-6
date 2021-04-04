@@ -20,6 +20,7 @@ const FavoriteButtonParams = {
 const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, priceText, goods, host, description} = activeCard;
+  const offerPlaceCards = [...placeCardsNearby, activeCard];
 
   return (
     <>
@@ -27,9 +28,9 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
         <div className="property__gallery-container container">
           <div className="property__gallery">
 
-            {images.map((photoUrl, i) => {
+            {images.map((photoUrl) => {
               return (
-                <div key={i.toString()} className="property__image-wrapper">
+                <div key={Math.random().toString()} className="property__image-wrapper">
                   <img className="property__image" src={photoUrl} alt="Photo studio"/>
                 </div>);
             })}
@@ -87,9 +88,9 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
 
-                {goods.map((good, i) => {
+                {goods.map((good) => {
                   return (
-                    <li key={i.toString()} className="property__inside-item">
+                    <li key={Math.random().toString()} className="property__inside-item">
                       {good}
                     </li>);
                 })}
@@ -113,9 +114,6 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
                 <p className="property__text">
                   {description}
                 </p>
-                <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                </p>
               </div>
             </div>
 
@@ -127,7 +125,7 @@ const OfferInfo = ({activeCard, placeCardsNearby, selectedCity}) => {
         <section className="property__map map">
 
           <Map
-            placeCards = {placeCardsNearby}
+            placeCards = {offerPlaceCards}
             city = {selectedCity} />
 
         </section>

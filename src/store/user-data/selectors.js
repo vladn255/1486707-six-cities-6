@@ -6,9 +6,12 @@ const getCurrentUser = (state) => state[NameSpace.USER].currentUser;
 
 const getFavoriteCards = (state) => state[NameSpace.USER].favoriteCards;
 
+const getServerErrorStatus = (state) => state[NameSpace.USER].serverErrorStatus;
+
 
 export {
   getAuthorizationStatus,
   getCurrentUser,
-  getFavoriteCards
+  getFavoriteCards,
+  getServerErrorStatus
 };

@@ -47,7 +47,7 @@ const adaptReviewToClient = (review) => Object.assign(
     }
 );
 
-const sortReviewsByDate = (reviewA, reviewB) => reviewA.date - reviewB.date;
+const sortReviewsByDate = (reviewA, reviewB) => new Date(reviewB.date).getTime() - new Date(reviewA.date).getTime();
 
 const getTargetCity = (currentCity) => CityList.find((city) => {
   return city[`name`] === currentCity;

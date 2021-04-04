@@ -1,6 +1,6 @@
 import {ActionCreator} from "./action.js";
-import {CityList, AuthorizationStatus, REVIEW_COUNT} from "../const.js";
-import {getFilteredPlaceCards, adaptPlaceCardToClient, adaptLoginDataToClient, adaptReviewToClient, sortReviewsByDate} from "../utils.js";
+import {CityList, AuthorizationStatus} from "../const.js";
+import {getFilteredPlaceCards, adaptPlaceCardToClient, adaptLoginDataToClient, adaptReviewToClient} from "../utils.js";
 
 const fetchPlaceCards = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -58,7 +58,7 @@ const fetchHotelId = (id) => (dispatch, _getState, api) => (
 const fetchComments = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
   .then((reviews) => {
-    const parsedReviews = reviews.data.slice().sort(sortReviewsByDate).slice(0, REVIEW_COUNT - 1).map((review) => adaptReviewToClient(review));
+    const parsedReviews = reviews.data.slice().map((review) => adaptReviewToClient(review));
     dispatch(ActionCreator.loadReviews(parsedReviews));
   })
 );

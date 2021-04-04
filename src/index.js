@@ -15,6 +15,7 @@ import {checkAuth, fetchPlaceCards} from './store/api-actions';
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
+    () => store.dispatch(ActionCreator.setServerErrorStatus(true))
 );
 
 const store = createStore(

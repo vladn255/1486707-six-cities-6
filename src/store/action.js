@@ -12,7 +12,8 @@ const ActionType = {
   SET_SUBMIT_STATUS_DISABLED: `offerForm/setSubmitStatusDisabled`,
   SET_FAVORITE_CARDS: `data/setFavoriteCards`,
   SET_CITY: `offerForm/setCity`,
-  CHANGE_FAVORITE_CARD: `data/changeFavoriteCard`
+  CHANGE_FAVORITE_CARD: `data/changeFavoriteCard`,
+  SET_SERVER_ERROR_STATUS: `data/setServerErrorStatus`
 };
 
 const ActionCreator = {
@@ -79,6 +80,11 @@ const ActionCreator = {
   changeFavoriteCard: (card) => ({
     type: ActionType.CHANGE_FAVORITE_CARD,
     payload: card
+  }),
+
+  setServerErrorStatus: (status) => ({
+    type: ActionType.SET_SERVER_ERROR_STATUS,
+    payload: status
   })
 };
 

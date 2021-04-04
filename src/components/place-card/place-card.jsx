@@ -14,13 +14,13 @@ const FavoriteButtonParams = {
   CLASS: `place-card`
 };
 
-const PlaceCard = ({placeCard, mouseOverHandler}) => {
+const PlaceCard = ({placeCard, onMouseOver}) => {
   const {id, previewImage, price, rating, title, type, isPremium, isFavorite} = placeCard;
 
   return (
     <article className="cities__place-card place-card"
       onMouseOver={() => {
-        mouseOverHandler(placeCard);
+        onMouseOver(placeCard);
       }}>
       <Link to={`${RoutePath.OFFER}/${id}`}>
         {isPremium
@@ -70,7 +70,7 @@ const PlaceCard = ({placeCard, mouseOverHandler}) => {
 
 PlaceCard.propTypes = {
   placeCard: placeCardType,
-  mouseOverHandler: PropTypes.func.isRequired
+  onMouseOver: PropTypes.func.isRequired
 };
 
 export default PlaceCard;

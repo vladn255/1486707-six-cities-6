@@ -8,7 +8,7 @@ const HttpCode = {
   PAGE_NOT_FOUND: 404
 };
 
-export const createAPI = (onUnauthorized) => {
+export const createAPI = (onUnauthorized, onServerError) => {
   const api = axios.create({
     baseURL: URL,
     timeout: REQUEST_TIMEOUT,
@@ -22,6 +22,8 @@ export const createAPI = (onUnauthorized) => {
 
     if (response.status === HttpCode.UNAUTHORIZED) {
       onUnauthorized();
+    } else {
+      onServerError();
     }
     throw err;
   };
