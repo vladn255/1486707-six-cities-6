@@ -25,14 +25,16 @@ const store = createStore(
     )
 );
 
-store.dispatch(checkAuth());
 store.dispatch(fetchPlaceCards());
+store.dispatch(checkAuth())
+  .finally(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+          <App
+          />
+        </Provider>,
+        document.querySelector(`#root`)
+    );
+  });
 
-ReactDOM.render(
-    <Provider store={store}>
-      <App
-      />
-    </Provider>,
-    document.querySelector(`#root`)
-);
 

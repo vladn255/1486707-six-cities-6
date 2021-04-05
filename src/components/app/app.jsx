@@ -45,7 +45,7 @@ const App = ({initialPlaceCards, serverErrorStatus}) => {
           path={`${RoutePath.OFFER}/:id`}
 
           render={() => {
-            if (initialPlaceCards.length === 0) {
+            if (initialPlaceCards.length === 0 && !serverErrorStatus) {
               return <LoadingScreen />;
             }
 

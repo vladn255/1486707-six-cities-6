@@ -61,7 +61,7 @@ const ReviewForm = ({reviewList, submitStatusDisabled, activeCardId, createRevie
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
 
       <ReviewList
-        reviewList={reviewList.slice().sort(sortReviewsByDate).slice(0, REVIEW_COUNT - 1).reverse()}
+        reviewList={reviewList.slice().sort(sortReviewsByDate).slice(0, REVIEW_COUNT - 1)}
       />
 
       {authorizationStatus === AuthorizationStatus.NO_AUTH
